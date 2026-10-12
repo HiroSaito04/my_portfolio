@@ -1,0 +1,662 @@
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar-shell {
+  position: sticky;
+  top: 0;
+  z-index: 45;
+
+  width: 100%;
+
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.navbar-shell .topbar {
+  width: 100%;
+  max-width: none;
+  height: 66px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto
+    minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+
+  margin: 0;
+  padding: 0 clamp(16px, 2vw, 32px);
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+
+  width: fit-content;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 39px;
+  height: 39px;
+
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.brand-copy strong {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.brand-copy small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
+
+.desktop-nav {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  white-space: nowrap;
+}
+
+.desktop-nav a {
+  position: relative;
+
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 14px;
+
+  border-radius: 8px;
+
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.desktop-nav a:hover {
+  color: var(--text);
+  background: var(--panel);
+}
+
+.desktop-nav a.active,
+.desktop-nav a[aria-current="location"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ACTIVE UNDERLINE */
+
+.desktop-nav a::after {
+  content: "";
+
+  position: absolute;
+  bottom: 2px;
+  left: 14px;
+  right: 14px;
+
+  height: 3px;
+
+  border-radius: 999px;
+  background: var(--accent);
+
+  opacity: 0;
+  transform: scaleX(0.4);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.desktop-nav a.active::after,
+.desktop-nav a[aria-current="location"]::after,
+.desktop-nav a:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   NAVBAR ACTIONS
+========================================================= */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.icon-button {
+  width: 39px;
+  height: 39px;
+
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.icon-button:hover {
+  background: var(--panel-2);
+  border-color: var(--accent);
+}
+
+.theme-toggle {
+  color: var(--text);
+}
+
+.menu-button {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE SIDE DRAWER
+========================================================= */
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Full-screen overlay container */
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+
+  display: flex;
+  justify-content: flex-end;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+/* Dim the page behind the side panel */
+
+.mobile-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.64);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  animation: drawer-fade-in 0.25s ease both;
+}
+
+/* The actual side panel */
+
+.mobile-drawer-panel {
+  position: relative;
+  z-index: 1;
+
+  width: min(410px, calc(100vw - 32px));
+  height: 100vh;
+  height: 100dvh;
+
+  flex-shrink: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  border-left: 1px solid var(--line);
+
+  background: var(--bg);
+  color: var(--text);
+
+  box-shadow: -20px 0 65px rgba(0, 0, 0, 0.3);
+
+  animation: drawer-slide-in 0.3s ease-out both;
+}
+
+/* Content container */
+
+.drawer-inner {
+  width: 100%;
+  min-height: 100%;
+
+  margin: 0;
+
+  padding:
+    max(20px, env(safe-area-inset-top))
+    22px
+    max(32px, env(safe-area-inset-bottom));
+}
+
+/* =========================================================
+   DRAWER HEADER
+========================================================= */
+
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer-head > span {
+  color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.drawer-close {
+  width: 36px;
+  height: 36px;
+}
+
+/* =========================================================
+   DRAWER LINKS
+========================================================= */
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  padding: 16px 0 22px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer-links a {
+  position: relative;
+
+  display: block;
+  width: fit-content;
+
+  padding: 10px 0;
+
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+
+  transition: color 0.2s ease;
+}
+
+.drawer-links a:hover,
+.drawer-links a.active {
+  color: var(--text);
+}
+
+.drawer-links a.active {
+  font-weight: 500;
+}
+
+/* Mobile active underline */
+
+.drawer-links a.active::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+
+  height: 2px;
+
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* =========================================================
+   VISITOR INFORMATION
+========================================================= */
+
+.drawer-visitors {
+  padding: 20px 0;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.visitor-avatars {
+  display: flex;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.visitor-avatar {
+  width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  margin-left: -6px;
+
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+}
+
+.visitor-avatar:first-child {
+  margin-left: 0;
+}
+
+.visitor-avatar-0 {
+  background: #f2f5f7;
+  color: #111315;
+}
+
+.visitor-avatar-1 {
+  background: #454b53;
+  color: #f2f5f7;
+}
+
+.visitor-avatar-2 {
+  background: #292e35;
+  color: #f2f5f7;
+}
+
+.visitor-status {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  margin: 12px 0 0;
+
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.visitor-status strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.visitor-status span {
+  color: var(--muted);
+}
+
+/* =========================================================
+   THEME SWITCHER
+========================================================= */
+
+.drawer-bottom {
+  padding: 24px 0 0;
+}
+
+.drawer-theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+
+  padding: 4px;
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  background: var(--panel);
+}
+
+.drawer-theme-option {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: var(--muted);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.drawer-theme-option:hover {
+  color: var(--text);
+}
+
+.drawer-theme-option[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* =========================================================
+   CONTACT INFORMATION
+========================================================= */
+
+.drawer-contact-intro {
+  max-width: 320px;
+
+  margin: 26px 0 16px;
+
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.drawer-contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.drawer-contact-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: fit-content;
+  max-width: 100%;
+
+  color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+
+  transition: color 0.2s ease;
+}
+
+.drawer-contact-links a svg {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.drawer-contact-links a span {
+  overflow-wrap: anywhere;
+}
+
+.drawer-contact-links a:hover,
+.drawer-contact-links a:hover svg {
+  color: var(--accent);
+}
+
+/* =========================================================
+   DRAWER ANIMATIONS
+========================================================= */
+
+@keyframes drawer-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .navbar-shell .topbar {
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .nav-actions {
+    margin-left: auto;
+  }
+
+  .menu-button {
+    display: grid;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 680px) {
+  .navbar-shell .topbar {
+    height: 60px;
+    padding-inline: 14px;
+  }
+
+  .brand-copy small {
+    display: none;
+  }
+
+  .brand-mark,
+  .icon-button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .mobile-drawer-panel {
+    width: min(380px, calc(100vw - 28px));
+  }
+
+  .drawer-inner {
+    padding:
+      max(18px, env(safe-area-inset-top))
+      20px
+      max(28px, env(safe-area-inset-bottom));
+  }
+
+  .drawer-links a {
+    font-size: 19px;
+  }
+
+  .drawer-contact-links a {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-drawer-backdrop,
+  .mobile-drawer-panel {
+    animation: none;
+  }
+
+  .desktop-nav a,
+  .desktop-nav a::after,
+  .icon-button,
+  .drawer-links a,
+  .drawer-theme-option,
+  .drawer-contact-links a {
+    transition: none;
+  }
+}
