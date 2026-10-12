@@ -1,6 +1,6 @@
 # Mike Angelo A. Rubia — Portfolio
 
-A minimal, responsive React + Vite portfolio inspired by the clean engineer-first structure of iging.tech, but redesigned around Mike Rubia's freelance/business positioning.
+A minimal, responsive React + Vite portfolio designed around Mike Rubia's freelance/business positioning.
 
 ## Run locally
 
