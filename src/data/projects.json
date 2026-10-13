@@ -52,9 +52,9 @@
     "preview": {
       "layout": "website",
       "embed": false,
-      "image": "/projects/pathforward.png",
+      "image": "/projects/pathforward-web.png",
       "video": "/projects/pathforward_vid.mp4",
-      "poster": "/projects/pathforward.png",
+      "poster": "/projects/pathforward-web.png",
       "alt": "PathForward website screenshot",
       "link": "https://pathforward-web.onrender.com/"
     },
@@ -81,11 +81,11 @@
     "highlights": [
     ],
     "preview": {
-      "layout": "mobile",
+      "layout": "design",
       "embed": true,
-      "image": null,
+      "image":  "/projects/pathforward-mobile02.png",
       "video": null,
-      "poster": null,
+      "poster":  "/projects/pathforward-mobile02.png",
       "alt": "Pathforward moble screenshot",
       "link": null
     },

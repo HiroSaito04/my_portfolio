@@ -4,31 +4,64 @@
 ========================================================= */
 
 .hero {
+  position: relative;
+
   display: grid;
   grid-template-columns:
-    minmax(0, 1.45fr)
-    minmax(290px, 0.75fr);
-  align-items: center;
-  gap: clamp(28px, 4vw, 54px);
+    minmax(0, 1.3fr)
+    minmax(310px, 0.85fr);
 
-  padding: 54px 0 64px;
+  grid-template-areas:
+    "copy profile"
+    "social profile";
+
+  align-items: start;
+
+  gap: 26px clamp(30px, 4.5vw, 70px);
+
+  padding: clamp(48px, 6vw, 85px) 0 78px;
+}
+
+.hero-top-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .hero-copy {
+  grid-area: copy;
   min-width: 0;
-  font-size: 16px;
 }
 
 /* =========================================================
    INTRODUCTION
 ========================================================= */
 
+.hero-intro-group {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 15px;
+}
+
+.hero-intro-line {
+  width: 26px;
+  height: 2px;
+
+  flex-shrink: 0;
+
+  border-radius: 99px;
+  background: var(--accent);
+}
+
 .hero-intro {
-  margin: 0 0 12px;
+  margin: 0;
 
   color: var(--muted);
 
-  font-size: clamp(17px, 1.6vw, 20px);
+  font-family: "DM Mono", monospace;
+  font-size: clamp(13px, 1.2vw, 16px);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -38,6 +71,9 @@
 ========================================================= */
 
 .hero .hero-name {
+  width: fit-content;
+  max-width: 100%;
+
   margin: 0;
 
   color: var(--accent);
@@ -47,12 +83,17 @@
     "DM Mono",
     monospace;
 
-  font-size: clamp(58px, 7.8vw, 108px);
+  font-size: clamp(70px, 8vw, 115px);
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.98;
   letter-spacing: -0.06em;
 
   white-space: nowrap;
+}
+
+.hero-name-period {
+  display: inline-block;
+  transform-origin: center bottom;
 }
 
 /* =========================================================
@@ -60,19 +101,65 @@
 ========================================================= */
 
 .hero-headline {
-  max-width: 660px;
-  margin: 24px 0 0;
+  max-width: 650px;
+  margin: 26px 0 0;
 
   color: var(--text);
 
-  font-size: clamp(26px, 2.7vw, 36px);
+  font-size: clamp(27px, 2.85vw, 41px);
   font-weight: 600;
-  line-height: 1.28;
-  letter-spacing: -0.04em;
+  line-height: 1.23;
+  letter-spacing: -0.05em;
+
+  text-wrap: balance;
 }
 
-.hero-headline span {
-  color: var(--muted);
+.hero-headline-static {
+  display: block;
+  color: var(--text);
+}
+
+/* =========================================================
+   TYPEWRITER
+========================================================= */
+
+.hero-typed-line {
+  display: block;
+
+  min-height: 1.25em;
+  margin-top: 5px;
+
+  color: var(--accent);
+}
+
+.hero-typed-text {
+  color: var(--accent);
+  white-space: pre-wrap;
+}
+
+.hero-typing-cursor {
+  display: inline-block;
+
+  width: 3px;
+  height: 0.88em;
+
+  margin-left: 5px;
+
+  border-radius: 2px;
+  background: var(--accent);
+
+  vertical-align: -0.12em;
+
+  animation:
+    hero-cursor-blink
+    0.8s steps(1) infinite;
+}
+
+.hero-typed-line.is-complete
+.hero-typing-cursor {
+  animation:
+    hero-cursor-finish
+    0.7s ease 1.1s forwards;
 }
 
 /* =========================================================
@@ -80,18 +167,17 @@
 ========================================================= */
 
 .hero-lead {
-  max-width: 650px;
-  margin: 20px 0 0;
+  max-width: 590px;
+  margin: 22px 0 0;
 
   color: var(--muted);
 
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.75;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.8;
 }
 
 /* =========================================================
-   PRIMARY ACTIONS
+   ACTIONS
 ========================================================= */
 
 .hero-actions {
@@ -100,7 +186,7 @@
   flex-wrap: wrap;
   gap: 10px;
 
-  margin-top: 28px;
+  margin-top: 30px;
 }
 
 .hero-actions .button {
@@ -109,51 +195,97 @@
   justify-content: center;
   gap: 11px;
 
-  min-height: 56px;
-  padding: 11px 18px;
+  min-height: 55px;
+  padding: 11px 19px;
 
-  border-radius: 10px;
+  border-radius: 12px;
 
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1.3;
+
+  text-decoration: none;
+
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
-.hero-work-button {
+/* Primary button */
+
+.hero-actions .hero-work-button {
+  gap: 17px;
+
+  border: 1px solid var(--accent);
+
+  background: var(--accent);
+  color: var(--bg);
+
   white-space: nowrap;
 }
 
 .hero-work-button svg {
-  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  transition: transform 0.22s ease;
+}
+
+.hero-actions .hero-work-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 8px 24px
+    color-mix(
+      in srgb,
+      var(--accent) 20%,
+      transparent
+    );
 }
 
 .hero-work-button:hover svg {
-  transform: translate(2px, 2px);
+  transform: translate(3px, 3px);
 }
 
-/* EMAIL ACTION AND COPY CONTROL */
+/* =========================================================
+   EMAIL
+========================================================= */
 
 .hero-email-group {
   display: flex;
   align-items: stretch;
+  gap: 8px;
 
   min-width: 0;
   max-width: 100%;
-  gap: 7px;
 }
 
 .hero-actions .hero-email-button {
   justify-content: flex-start;
+  gap: 11px;
+
   min-width: 0;
+
+  border: 1px solid var(--line);
+
+  background: var(--panel);
+  color: var(--text);
 
   text-align: left;
 }
 
-.hero-email-button > svg {
+.hero-actions .hero-email-button > svg {
   flex-shrink: 0;
+  color: var(--accent);
 }
 
-.hero-email-button > svg:last-child {
-  color: var(--accent);
+.hero-actions .hero-email-button:hover {
+  border-color: var(--accent);
+
+  background: var(--panel-2);
+
+  transform: translateY(-2px);
 }
 
 .hero-email-text {
@@ -167,7 +299,7 @@
 .hero-email-text strong {
   color: var(--text);
 
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -175,24 +307,25 @@
 .hero-email-text small {
   color: var(--muted);
 
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.4;
+  font-size: 12px;
+  line-height: 1.35;
 
   overflow-wrap: anywhere;
 }
 
-.hero-copy-email {
-  width: 48px;
-  min-width: 48px;
+/* Copy email */
 
+.hero-copy-email {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
 
+  width: 55px;
+  min-height: 55px;
   padding: 0;
 
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
 
   background: var(--panel);
   color: var(--text);
@@ -200,19 +333,28 @@
   cursor: pointer;
 
   transition:
-    color 0.2s ease,
     border-color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .hero-copy-email:hover {
   border-color: var(--accent);
-  color: var(--accent);
+
   background: var(--panel-2);
+  color: var(--accent);
+
+  transform: translateY(-2px);
+}
+
+.hero-copy-email.is-copied {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .hero-copy-feedback {
-  min-height: 18px;
+  min-height: 20px;
   margin: 8px 0 0;
 
   color: var(--muted);
@@ -222,149 +364,184 @@
 }
 
 /* =========================================================
-   SOCIAL LINKS
-========================================================= */
-
-.hero-social {
-  margin-top: 23px;
-}
-
-.hero-social-label {
-  margin: 0 0 11px;
-
-  color: var(--muted);
-
-  font-family: "DM Mono", monospace;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-}
-
-.social-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-
-  margin: 0;
-}
-
-.social-row .social-link {
-  min-width: 0;
-  min-height: 62px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  padding: 11px 14px;
-
-  border: 1px solid var(--line);
-  border-radius: 10px;
-
-  background: var(--panel);
-  color: var(--text);
-
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-.social-link-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  min-width: 0;
-}
-
-.social-link-info strong {
-  color: var(--text);
-
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.social-link-info small {
-  max-width: 100%;
-
-  overflow: hidden;
-
-  color: var(--muted);
-
-  font-size: 13px;
-  line-height: 1.3;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.social-link > svg {
-  flex-shrink: 0;
-  color: var(--accent);
-}
-
-.social-row .social-link:hover {
-  border-color: var(--accent);
-  background: var(--panel-2);
-  transform: translateY(-2px);
-}
-
-/* =========================================================
-   PROFILE CARD
+   PROFILE CARD — OUTER SHELL
 ========================================================= */
 
 .hero-profile {
+  grid-area: profile;
+  align-self: start;
+
+  position: relative;
+
   width: 100%;
   min-width: 0;
 
-  overflow: hidden;
-
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 20px;
 
   background: var(--panel);
-  box-shadow: var(--shadow);
+  color: var(--text);
+
+  box-shadow:
+    0 16px 45px rgba(0, 0, 0, 0.07);
+
+  perspective: 1500px;
+  -webkit-perspective: 1500px;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.hero-profile:hover {
-  border-color: var(--muted);
+.hero-profile:hover,
+.hero-profile:focus-visible {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--accent) 55%,
+      var(--line)
+    );
+
+  box-shadow:
+    0 18px 52px rgba(0, 0, 0, 0.11);
 }
 
 /* =========================================================
-   PROFILE HEADER
+   SLOW 3D FLIP
+
+   1.6-second rotation.
+   No button needed.
+========================================================= */
+
+.hero-profile-inner {
+  display: grid;
+
+  width: 100%;
+
+  border-radius: inherit;
+
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+
+  transform: rotateY(0deg);
+
+  transition:
+    transform 1.6s
+    cubic-bezier(
+      0.45,
+      0.05,
+      0.2,
+      1
+    );
+
+  will-change: transform;
+}
+
+.hero-profile.is-flipped
+.hero-profile-inner {
+  transform: rotateY(180deg);
+}
+
+/* =========================================================
+   BOTH SIDES
+
+   Grid stacking keeps the card height stable.
+========================================================= */
+
+.hero-profile-face {
+  grid-area: 1 / 1;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 19px;
+  background: var(--panel);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Picture side */
+
+.hero-profile-front {
+  transform: rotateY(0deg);
+}
+
+/* Specialties side */
+
+.hero-profile-back {
+  transform: rotateY(180deg);
+}
+
+/* Only the visible face receives pointer events */
+
+.hero-profile.is-flipped
+.hero-profile-front {
+  pointer-events: none;
+}
+
+.hero-profile:not(.is-flipped)
+.hero-profile-back {
+  pointer-events: none;
+}
+
+/* =========================================================
+   CARD TOP
 ========================================================= */
 
 .hero-profile-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 
-  padding: 14px 18px;
+  min-height: 52px;
+  padding: 15px 19px;
 
   border-bottom: 1px solid var(--line);
+}
 
+.hero-profile-eyebrow,
+.hero-card-back-tag {
   color: var(--muted);
 
   font-family: "DM Mono", monospace;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.065em;
+  line-height: 1.4;
 }
+
+.hero-card-back-tag {
+  color: var(--accent);
+}
+
+/* =========================================================
+   AVAILABILITY
+========================================================= */
 
 .hero-profile-status {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
+  flex-shrink: 0;
 
   color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+
   white-space: nowrap;
 }
 
@@ -372,48 +549,117 @@
   width: 7px;
   height: 7px;
 
-  flex-shrink: 0;
   border-radius: 50%;
-
   background: var(--accent);
-  box-shadow: 0 0 9px var(--accent);
+
+  box-shadow:
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--accent) 13%,
+      transparent
+    );
+
+  animation:
+    hero-status-pulse
+    2.7s ease-in-out infinite;
 }
 
 /* =========================================================
-   PROFILE CONTENT
+   FRONT — PHOTO AREA
 ========================================================= */
 
-.hero-profile-body {
-  display: block;
-}
-
-/* PHOTO */
-
 .hero-photo-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
 
-  padding: 24px 18px;
+  display: grid;
+  place-items: center;
+
+  min-height: 230px;
+  padding: 28px 20px;
+
+  overflow: hidden;
 
   background:
     radial-gradient(
-      circle at center,
+      circle at 50% 45%,
       var(--panel-2),
-      var(--panel) 72%
+      var(--panel) 75%
     );
 }
 
+/* Pixel-like grid */
+
+.hero-photo-area::before {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      var(--line) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      var(--line) 1px,
+      transparent 1px
+    );
+
+  background-size: 25px 25px;
+  opacity: 0.25;
+
+  pointer-events: none;
+  content: "";
+}
+
+.hero-photo-decoration {
+  position: absolute;
+  top: 16px;
+  right: 17px;
+  left: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+
+  pointer-events: none;
+}
+
 .hero-photo-frame {
-  width: min(100%, 185px);
+  position: relative;
+  z-index: 1;
+
+  width: min(100%, 168px);
   aspect-ratio: 5 / 6;
 
   overflow: hidden;
 
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
 
   background: var(--panel-2);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.1);
+
+  transform: rotate(-3deg);
+
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.hero-profile:not(.is-flipped):hover
+.hero-photo-frame {
+  transform:
+    rotate(0deg)
+    translateY(-4px);
 }
 
 .hero-photo {
@@ -424,18 +670,17 @@
 
   object-fit: cover;
   object-position: center 25%;
-
-  transition: transform 0.35s ease;
 }
 
-.hero-profile:hover .hero-photo {
-  transform: scale(1.035);
-}
-
-/* PROFILE DETAILS */
+/* =========================================================
+   FRONT — PROFILE INFORMATION
+========================================================= */
 
 .hero-profile-info {
-  padding: 20px 22px 22px;
+  flex: 1;
+
+  padding: 23px 24px 25px;
+
   border-top: 1px solid var(--line);
 }
 
@@ -445,21 +690,21 @@
   color: var(--accent);
 
   font-family: "DM Mono", monospace;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 10px;
+  font-weight: 600;
   line-height: 1.5;
-  letter-spacing: 0.045em;
+  letter-spacing: 0.075em;
 }
 
 .hero-profile-info h3 {
-  margin: 8px 0 9px;
+  margin: 9px 0 11px;
 
   color: var(--text);
 
-  font-size: clamp(21px, 2vw, 27px);
+  font-size: clamp(22px, 2vw, 29px);
   font-weight: 600;
-  line-height: 1.28;
-  letter-spacing: -0.035em;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
 }
 
 .hero-profile-description {
@@ -467,25 +712,27 @@
 
   color: var(--muted);
 
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13px;
+  line-height: 1.75;
 }
 
 .hero-about-link {
-  width: fit-content;
-
   display: inline-flex;
   align-items: center;
   gap: 8px;
 
-  margin-top: 16px;
+  width: fit-content;
+  margin-top: 18px;
 
   color: var(--text);
 
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
+  text-decoration: none;
 
-  transition: color 0.2s ease;
+  transition:
+    gap 0.2s ease,
+    color 0.2s ease;
 }
 
 .hero-about-link svg {
@@ -493,139 +740,517 @@
 }
 
 .hero-about-link:hover {
+  gap: 12px;
   color: var(--accent);
 }
 
 /* =========================================================
-   EXPANDABLE FOCUS SECTION
+   BACK — INTRO
 ========================================================= */
 
-.hero-focus-details {
-  border-top: 1px solid var(--line);
+.hero-back-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+
+  min-width: 0;
+  padding: 24px 20px;
 }
 
-.hero-focus-details summary {
+.hero-back-heading h3 {
+  margin: 10px 0;
+
+  color: var(--text);
+
+  font-size: clamp(23px, 2.4vw, 31px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.05em;
+}
+
+.hero-back-heading h3 span {
+  color: var(--muted);
+}
+
+.hero-back-heading > p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   BACK — FOCUS AREAS
+========================================================= */
+
+.hero-back-services {
+  display: grid;
+  gap: 9px;
+}
+
+.hero-back-service {
+  display: grid;
+  grid-template-columns:
+    36px minmax(0, 1fr) auto;
+
+  align-items: start;
+  gap: 11px;
+
+  min-width: 0;
+  padding: 14px 12px;
+
+  border: 1px solid var(--line);
+  border-radius: 11px;
+
+  background: var(--bg);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero-back-service:hover {
+  border-color: var(--accent);
+
+  background: var(--panel-2);
+  transform: translateX(3px);
+}
+
+.hero-back-service-icon {
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid var(--line);
+  border-radius: 9px;
+
+  background: var(--panel);
+  color: var(--accent);
+}
+
+.hero-back-service strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.hero-back-service p {
+  margin: 5px 0 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.hero-back-service-number {
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+}
+
+/* =========================================================
+   CARD FOOTER — NO BUTTON
+========================================================= */
+
+.hero-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 
-  padding: 16px 20px;
+  margin-top: auto;
+  padding: 14px 18px;
 
+  border-top: 1px solid var(--line);
+
+  background: var(--panel);
+}
+
+.hero-card-hint {
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+}
+
+.hero-card-flip-symbol {
+  color: var(--accent);
+
+  font-family: "DM Mono", monospace;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Small visual cue while hovering */
+
+.hero-profile:hover
+.hero-card-flip-symbol {
+  animation:
+    hero-flip-cue
+    1.5s ease-in-out infinite;
+}
+
+/* =========================================================
+   BACK — CONTACT LINK
+========================================================= */
+
+.hero-back-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: var(--text);
+
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.hero-back-contact svg {
+  color: var(--accent);
+}
+
+.hero-back-contact:hover {
+  color: var(--accent);
+}
+
+/* =========================================================
+   SOCIAL LINKS
+========================================================= */
+
+.hero-social {
+  grid-area: social;
+
+  min-width: 0;
+  align-self: start;
+}
+
+.hero-social-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  margin-bottom: 13px;
+}
+
+.hero-social-label {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+
+  white-space: nowrap;
+}
+
+.hero-social-line {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.hero-social .social-row {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+  margin: 0;
+}
+
+.hero-social .social-row .social-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  min-width: 0;
+  min-height: 64px;
+  padding: 12px 15px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero-social .social-link-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.hero-social .social-link-info strong {
   color: var(--text);
 
   font-size: 14px;
   font-weight: 600;
-
-  cursor: pointer;
-  list-style: none;
-
-  transition: background 0.2s ease;
 }
 
-.hero-focus-details summary::-webkit-details-marker {
-  display: none;
-}
+.hero-social .social-link-info small {
+  max-width: 100%;
 
-.hero-focus-details summary:hover {
-  background: var(--panel-2);
-}
-
-.hero-focus-indicator {
-  width: 25px;
-  height: 25px;
-
-  display: grid;
-  place-items: center;
-
-  border: 1px solid var(--line);
-  border-radius: 6px;
-
-  color: var(--accent);
-
-  font-family: "DM Mono", monospace;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1;
-
-  transition: transform 0.2s ease;
-}
-
-.hero-focus-details[open] .hero-focus-indicator {
-  transform: rotate(45deg);
-}
-
-.hero-focus-list {
-  display: grid;
-  gap: 0;
-
-  padding: 0 20px 18px;
-}
-
-.hero-focus-item {
-  padding: 12px 0;
-  border-top: 1px solid var(--line-soft);
-}
-
-.hero-focus-item strong {
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.hero-focus-item p {
-  margin: 4px 0 0;
+  overflow: hidden;
 
   color: var(--muted);
+  font-size: 12px;
 
-  font-size: 13px;
-  line-height: 1.55;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-social .social-link > svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.hero-social .social-row .social-link:hover {
+  border-color: var(--accent);
+  background: var(--panel-2);
+
+  transform: translateY(-3px);
+}
+
+/* =========================================================
+   KEYBOARD FOCUS
+========================================================= */
+
+.hero a:focus-visible,
+.hero button:focus-visible,
+.hero-profile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* =========================================================
+   HERO ENTRANCE ANIMATIONS
+========================================================= */
+
+.hero-ready .hero-intro-group {
+  animation:
+    hero-reveal-up
+    0.5s 0.05s ease-out both;
+}
+
+.hero-ready .hero-name {
+  animation:
+    hero-name-reveal
+    0.75s 0.1s
+    cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-ready .hero-name-period {
+  animation:
+    hero-period-pop
+    0.5s 0.5s both;
+}
+
+.hero-ready .hero-headline {
+  animation:
+    hero-reveal-up
+    0.65s 0.26s ease-out both;
+}
+
+.hero-ready .hero-lead {
+  animation:
+    hero-reveal-up
+    0.65s 0.42s ease-out both;
+}
+
+.hero-ready .hero-actions {
+  animation:
+    hero-reveal-up
+    0.65s 0.55s ease-out both;
+}
+
+.hero-ready .hero-profile {
+  animation:
+    hero-card-appear
+    0.8s 0.2s ease-out both;
+}
+
+.hero-ready .hero-social {
+  animation:
+    hero-reveal-up
+    0.7s 0.72s ease-out both;
+}
+
+/* =========================================================
+   KEYFRAMES
+========================================================= */
+
+@keyframes hero-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-name-reveal {
+  from {
+    opacity: 0;
+
+    transform: translateY(15px);
+
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes hero-period-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-card-appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-cursor-finish {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-status-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px
+      color-mix(
+        in srgb,
+        var(--accent) 12%,
+        transparent
+      );
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 6px
+      color-mix(
+        in srgb,
+        var(--accent) 4%,
+        transparent
+      );
+  }
+}
+
+@keyframes hero-flip-cue {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(45deg);
+  }
 }
 
 /* =========================================================
    TABLET
 ========================================================= */
 
-@media (max-width: 980px) {
+@media (max-width: 1050px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
-    gap: 30px;
 
-    padding: 42px 0 52px;
+    grid-template-areas:
+      "copy"
+      "profile"
+      "social";
+
+    gap: 30px;
+    padding: 47px 0 65px;
   }
 
-  .hero-copy {
+  .hero-copy,
+  .hero-profile,
+  .hero-social {
+    width: 100%;
     max-width: 760px;
   }
 
   .hero .hero-name {
-    font-size: clamp(58px, 10vw, 98px);
+    font-size: clamp(67px, 9vw, 105px);
   }
 
-  .hero-profile {
+  .hero-headline {
     max-width: 700px;
   }
 
-  .hero-profile-body {
-    display: grid;
-    grid-template-columns: 180px minmax(0, 1fr);
-  }
-
   .hero-photo-area {
-    padding: 18px;
-  }
-
-  .hero-photo-frame {
-    width: min(100%, 145px);
-  }
-
-  .hero-profile-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    border-top: 0;
-    border-left: 1px solid var(--line);
+    min-height: 240px;
   }
 }
 
@@ -636,48 +1261,53 @@
 @media (max-width: 680px) {
   .hero {
     gap: 26px;
-    padding: 30px 0 40px;
+    padding: 30px 0 48px;
   }
 
   .hero-intro {
-    margin-bottom: 8px;
-    font-size: 16px;
+    font-size: 13px;
   }
 
   .hero .hero-name {
-    font-size: clamp(40px, 10.5vw, 70px);
-    line-height: 1;
-    letter-spacing: -0.065em;
+    font-size: clamp(57px, 13.5vw, 86px);
   }
 
   .hero-headline {
-    margin-top: 18px;
+    margin-top: 20px;
 
-    font-size: clamp(23px, 5.9vw, 30px);
-    line-height: 1.28;
+    font-size: clamp(26px, 6.6vw, 35px);
+    line-height: 1.25;
+  }
+
+  .hero-typed-line {
+    min-height: 2.5em;
   }
 
   .hero-lead {
-    margin-top: 15px;
+    margin-top: 16px;
 
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 15px;
+    line-height: 1.75;
   }
 
   /* ACTIONS */
 
   .hero-actions {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: minmax(0, 1fr);
 
-    margin-top: 23px;
+    gap: 10px;
+    margin-top: 25px;
   }
 
   .hero-actions .button {
     width: 100%;
-    min-height: 52px;
-    padding: 11px 15px;
+    min-height: 54px;
+    padding: 11px 16px;
+  }
+
+  .hero-actions .hero-work-button {
+    justify-content: space-between;
   }
 
   .hero-email-group {
@@ -689,84 +1319,67 @@
     width: auto;
   }
 
-  .hero-copy-email {
-    width: 52px;
-    min-width: 52px;
-  }
-
   .hero-email-text {
     flex: 1;
   }
 
-  /* SOCIALS */
-
-  .hero-social {
-    margin-top: 18px;
+  .hero-copy-email {
+    width: 54px;
+    min-height: 54px;
   }
 
-  .social-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .social-row .social-link {
-    min-height: 61px;
-    padding: 11px 12px;
-  }
-
-  /* PROFILE */
+  /* CARD */
 
   .hero-profile {
-    max-width: none;
+    border-radius: 16px;
+  }
+
+  .hero-profile-face {
+    border-radius: 15px;
   }
 
   .hero-profile-top {
-    padding: 12px 14px;
-    font-size: 10px;
-  }
-
-  .hero-profile-body {
-    display: grid;
-    grid-template-columns: 128px minmax(0, 1fr);
-  }
-
-  .hero-photo-area {
-    padding: 14px 10px;
-  }
-
-  .hero-photo-frame {
-    width: min(100%, 108px);
-  }
-
-  .hero-profile-info {
-    padding: 15px 14px;
-  }
-
-  .hero-profile-info h3 {
-    margin: 7px 0;
-    font-size: 20px;
-  }
-
-  .hero-profile-role {
-    font-size: 10px;
-  }
-
-  .hero-profile-description {
-    font-size: 13px;
-    line-height: 1.55;
-  }
-
-  .hero-about-link {
-    margin-top: 11px;
-    font-size: 13px;
-  }
-
-  .hero-focus-details summary {
     padding: 14px 16px;
   }
 
-  .hero-focus-list {
-    padding-inline: 16px;
+  .hero-photo-area {
+    min-height: 205px;
+    padding: 24px 16px;
+  }
+
+  .hero-photo-frame {
+    width: 145px;
+  }
+
+  .hero-profile-info {
+    padding: 22px 20px;
+  }
+
+  .hero-profile-info h3 {
+    font-size: 25px;
+  }
+
+  .hero-back-content {
+    padding: 22px 17px;
+  }
+
+  .hero-back-heading h3 {
+    font-size: 26px;
+  }
+
+  .hero-card-footer {
+    padding: 13px 16px;
+  }
+
+  /* SOCIALS */
+
+  .hero-social .social-row {
+    gap: 9px;
+  }
+
+  .hero-social .social-row .social-link {
+    min-height: 62px;
+    padding: 11px 13px;
   }
 }
 
@@ -775,82 +1388,128 @@
 ========================================================= */
 
 @media (max-width: 430px) {
+  .hero {
+    padding-top: 25px;
+    gap: 23px;
+  }
+
   .hero .hero-name {
-    font-size: clamp(36px, 10vw, 44px);
+    font-size: clamp(53px, 14vw, 65px);
   }
 
-  .social-row {
-    grid-template-columns: minmax(0, 1fr);
+  .hero-headline {
+    font-size: clamp(24px, 7vw, 29px);
   }
 
-  .social-row .social-link {
-    min-height: 58px;
+  .hero-lead {
+    font-size: 14px;
+  }
+
+  .hero-email-group {
+    gap: 7px;
   }
 
   .hero-email-text small {
-    font-size: 12px;
-  }
-
-  .hero-profile-body {
-    grid-template-columns: 112px minmax(0, 1fr);
-  }
-
-  .hero-photo-area {
-    padding: 12px 8px;
+    font-size: 11px;
   }
 
   .hero-photo-frame {
-    width: 96px;
+    width: 132px;
   }
 
   .hero-profile-info {
-    padding: 13px 12px;
+    padding: 20px 17px;
   }
 
   .hero-profile-info h3 {
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 350px) {
-  .hero-profile-body {
-    grid-template-columns: minmax(0, 1fr);
+    font-size: 23px;
   }
 
-  .hero-photo-area {
-    padding: 14px;
+  .hero-back-service {
+    grid-template-columns:
+      34px minmax(0, 1fr);
+
+    padding: 12px 10px;
   }
 
-  .hero-photo-frame {
-    width: 110px;
+  .hero-back-service-icon {
+    width: 34px;
+    height: 34px;
   }
 
-  .hero-profile-info {
-    border-left: 0;
-    border-top: 1px solid var(--line);
+  .hero-back-service-number {
+    display: none;
+  }
+
+  .hero-social .social-row .social-link {
+    padding: 11px;
+  }
+
+  .hero-social .social-link-info strong {
+    font-size: 13px;
+  }
+
+  .hero-social .social-link-info small {
+    font-size: 11px;
   }
 }
 
 /* =========================================================
-   ACCESSIBILITY
+   EXTRA SMALL PHONES
+========================================================= */
+
+@media (max-width: 350px) {
+  .hero .hero-name {
+    font-size: 49px;
+  }
+
+  .hero-social .social-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-work-button svg,
-  .hero-copy-email,
-  .social-row .social-link,
-  .hero-profile,
-  .hero-photo,
-  .hero-about-link,
-  .hero-focus-details summary,
-  .hero-focus-indicator {
+  .hero-profile-inner {
     transition: none;
   }
 
-  .hero-work-button:hover svg,
-  .social-row .social-link:hover,
-  .hero-profile:hover .hero-photo,
-  .hero-focus-details[open] .hero-focus-indicator {
+  .hero-ready .hero-intro-group,
+  .hero-ready .hero-name,
+  .hero-ready .hero-name-period,
+  .hero-ready .hero-headline,
+  .hero-ready .hero-lead,
+  .hero-ready .hero-actions,
+  .hero-ready .hero-profile,
+  .hero-ready .hero-social,
+  .hero-profile-status .status-dot,
+  .hero-profile:hover
+  .hero-card-flip-symbol {
+    animation: none;
+  }
+
+  .hero-typing-cursor {
+    display: none;
+  }
+
+  .hero-actions .button,
+  .hero-copy-email,
+  .hero-photo-frame,
+  .hero-about-link,
+  .hero-back-service,
+  .hero-social .social-link {
+    transition: none;
+  }
+
+  .hero-actions .button:hover,
+  .hero-copy-email:hover,
+  .hero-profile:not(.is-flipped):hover
+  .hero-photo-frame,
+  .hero-back-service:hover,
+  .hero-social .social-link:hover {
     transform: none;
   }
 }

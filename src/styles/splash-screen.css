@@ -1,0 +1,2092 @@
+
+/* =========================================================
+   CINEMATIC PIXEL SPLASH
+   All colors inherit the portfolio theme.
+========================================================= */
+
+body.splash-open {
+  overflow: hidden;
+}
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background: var(--bg);
+  color: var(--text);
+
+  opacity: 1;
+
+  --splash-glow:
+    color-mix(
+      in srgb,
+      var(--accent) 55%,
+      transparent
+    );
+
+  --splash-glow-soft:
+    color-mix(
+      in srgb,
+      var(--accent) 12%,
+      transparent
+    );
+}
+
+/* =========================================================
+   ATMOSPHERE
+========================================================= */
+
+.splash-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 43%,
+      var(--splash-glow-soft) 0%,
+      transparent 57%
+    );
+}
+
+/* Fine technical grid */
+
+.splash-grid {
+  position: absolute;
+  inset: -35px;
+
+  background-image:
+    linear-gradient(
+      to right,
+      var(--line) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      var(--line) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+
+  opacity: 0.15;
+
+  animation:
+    splash-grid-drift 14s linear infinite;
+}
+
+/* Darker / softer edges using theme background */
+
+.splash-vignette {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 22%,
+      color-mix(
+        in srgb,
+        var(--bg) 80%,
+        transparent
+      ) 100%
+    );
+}
+
+/* One thin moving scan beam */
+
+.splash-scan-beam {
+  position: absolute;
+  top: -20%;
+  left: -25%;
+
+  width: 150%;
+  height: 2px;
+
+  opacity: 0.65;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--accent),
+      transparent
+    );
+
+  box-shadow:
+    0 0 16px var(--splash-glow);
+
+  transform: rotate(-19deg);
+
+  animation:
+    splash-scan-travel 3.3s ease-in-out both;
+}
+
+/* Central light atmosphere */
+
+.splash-energy-halo {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+
+  width: min(75vw, 550px);
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      var(--splash-glow-soft) 0%,
+      color-mix(
+        in srgb,
+        var(--accent) 5%,
+        transparent
+      ) 35%,
+      transparent 69%
+    );
+
+  transform: translate(-50%, -50%);
+
+  animation:
+    splash-halo-breathe
+    2.4s ease-in-out infinite;
+}
+
+/* =========================================================
+   MOVING ENERGY PARTICLES
+========================================================= */
+
+.splash-particle-field {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.splash-energy-particle {
+  position: absolute;
+
+  top: var(--py);
+  left: var(--px);
+
+  width: var(--size);
+  height: var(--size);
+
+  background: var(--accent);
+  opacity: 0;
+
+  box-shadow:
+    0 0 8px var(--splash-glow);
+
+  animation:
+    splash-particle-travel
+    var(--duration)
+    var(--delay)
+    ease-in-out
+    infinite;
+
+  will-change: transform, opacity;
+}
+
+/* Tiny square */
+
+.splash-energy-square {
+  border-radius: 0;
+}
+
+/* Diamond */
+
+.splash-energy-diamond {
+  transform: rotate(45deg);
+  clip-path: polygon(
+    50% 0,
+    100% 50%,
+    50% 100%,
+    0 50%
+  );
+}
+
+/* Thin energy trail */
+
+.splash-energy-dash {
+  width: calc(var(--size) * 3);
+  height: 2px;
+
+  border-radius: 999px;
+}
+
+/* Pixel cross */
+
+.splash-energy-cross {
+  background: transparent;
+  box-shadow: none;
+}
+
+.splash-energy-cross::before,
+.splash-energy-cross::after {
+  position: absolute;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 7px var(--splash-glow);
+
+  content: "";
+}
+
+.splash-energy-cross::before {
+  top: 50%;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  transform: translateY(-50%);
+}
+
+.splash-energy-cross::after {
+  top: 0;
+  left: 50%;
+
+  width: 2px;
+  height: 100%;
+
+  transform: translateX(-50%);
+}
+
+/* Four-point light spark */
+
+.splash-energy-spark {
+  width: calc(var(--size) * 1.7);
+  height: calc(var(--size) * 1.7);
+
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
+}
+
+/* =========================================================
+   ENERGY RING SYSTEM
+========================================================= */
+
+.splash-power-field {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  z-index: 1;
+
+  width: 1px;
+  height: 1px;
+
+  pointer-events: none;
+}
+
+.splash-power-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: block;
+
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      var(--accent) 0deg 14deg,
+      transparent 14deg 23deg,
+      var(--accent) 23deg 26deg,
+      transparent 26deg 45deg
+    );
+
+  -webkit-mask:
+    radial-gradient(
+      circle,
+      transparent 62%,
+      #000 63% 65%,
+      transparent 66%
+    );
+
+  mask:
+    radial-gradient(
+      circle,
+      transparent 62%,
+      #000 63% 65%,
+      transparent 66%
+    );
+
+  opacity: 0.42;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(0deg);
+}
+
+/* Inner ring */
+
+.splash-power-ring-1 {
+  width: 315px;
+
+  animation:
+    splash-ring-clockwise
+    12s linear infinite;
+}
+
+/* Middle ring */
+
+.splash-power-ring-2 {
+  width: 430px;
+
+  opacity: 0.23;
+
+  animation:
+    splash-ring-counter
+    17s linear infinite;
+}
+
+/* Outer ring */
+
+.splash-power-ring-3 {
+  width: 575px;
+
+  opacity: 0.11;
+
+  animation:
+    splash-ring-clockwise
+    28s linear infinite;
+}
+
+/* Sharp crosshair near the mascot */
+
+.splash-power-crosshair {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 270px;
+  height: 270px;
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--accent) 15%,
+      transparent
+    );
+
+  opacity: 0.5;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
+
+  animation:
+    splash-crosshair-pulse
+    2.5s ease-in-out infinite;
+}
+
+.splash-power-crosshair::before,
+.splash-power-crosshair::after {
+  position: absolute;
+
+  width: 24px;
+  height: 3px;
+
+  background: var(--accent);
+
+  content: "";
+}
+
+.splash-power-crosshair::before {
+  top: -2px;
+  left: -2px;
+}
+
+.splash-power-crosshair::after {
+  right: -2px;
+  bottom: -2px;
+}
+
+/* =========================================================
+   CENTER STAGE
+========================================================= */
+
+.splash-center {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: min(
+    calc(100% - 36px),
+    900px
+  );
+
+  padding: 28px 12px;
+
+  text-align: center;
+}
+
+/* =========================================================
+   MASCOT
+========================================================= */
+
+.splash-mascot-stage {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  width: 235px;
+  height: 235px;
+
+  margin-bottom: 22px;
+
+  perspective: 950px;
+}
+
+/* Outer wrapper controls entrance direction */
+
+.splash-mascot-entrance {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  width: 210px;
+  height: 210px;
+
+  --enter-x: 0px;
+  --enter-y: -350px;
+  --enter-angle: -25deg;
+
+  animation:
+    splash-mascot-arrive
+    0.95s
+    cubic-bezier(0.17, 0.85, 0.23, 1.13)
+    both;
+}
+
+/* Different random entrance directions */
+
+.splash-mascot-entrance.from-left {
+  --enter-x: -105vw;
+  --enter-y: 80px;
+  --enter-angle: -36deg;
+}
+
+.splash-mascot-entrance.from-right {
+  --enter-x: 105vw;
+  --enter-y: -80px;
+  --enter-angle: 36deg;
+}
+
+.splash-mascot-entrance.from-top {
+  --enter-x: 0px;
+  --enter-y: -85vh;
+  --enter-angle: -24deg;
+}
+
+.splash-mascot-entrance.from-bottom {
+  --enter-x: 0px;
+  --enter-y: 85vh;
+  --enter-angle: 24deg;
+}
+
+.splash-mascot-entrance.from-top-left {
+  --enter-x: -90vw;
+  --enter-y: -70vh;
+  --enter-angle: -45deg;
+}
+
+.splash-mascot-entrance.from-top-right {
+  --enter-x: 90vw;
+  --enter-y: -70vh;
+  --enter-angle: 45deg;
+}
+
+/* Continuous floating motion */
+
+.splash-mascot-float {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  animation:
+    splash-mascot-bob
+    2.4s 1s ease-in-out infinite;
+}
+
+/* One cinematic 3D flip */
+
+.splash-mascot-flip {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  transform-style: preserve-3d;
+
+  animation:
+    splash-mascot-rotate
+    0.8s 0.5s ease-out both;
+}
+
+/* Full uncropped mascot PNG */
+
+.splash-mascot-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+
+  user-select: none;
+  pointer-events: none;
+
+  filter:
+    drop-shadow(
+      0 0 14px var(--splash-glow)
+    );
+}
+
+/* Soft ground reflection below the mascot */
+
+.splash-mascot-ground {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: -1;
+
+  width: 150px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  opacity: 0.17;
+  filter: blur(15px);
+
+  transform: translateX(-50%);
+
+  animation:
+    splash-ground-breathe
+    2.4s ease-in-out infinite;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.splash-title {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+
+  width: 100%;
+  margin: 0;
+
+  color: var(--text);
+  text-align: center;
+
+  line-height: 1;
+}
+
+/* Primary name — strong pixel lettering */
+
+.splash-title-primary {
+  display: flex;
+  justify-content: center;
+
+  min-height: 1.05em;
+
+  color: var(--text);
+
+  font-family:
+    "Pixelify Sans",
+    "DM Mono",
+    monospace;
+
+  font-size: clamp(
+    72px,
+    11vw,
+    132px
+  );
+
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: 0.08em;
+}
+
+/* Secondary — technical wordmark */
+
+.splash-title-secondary {
+  display: flex;
+  justify-content: center;
+
+  min-height: 1.3em;
+
+  padding-left: 0.17em;
+
+  color: var(--accent);
+
+  font-family:
+    "DM Mono",
+    monospace;
+
+  font-size: clamp(
+    20px,
+    3vw,
+    36px
+  );
+
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.19em;
+}
+
+/* Each letter reveals independently */
+
+.splash-letter {
+  display: inline-block;
+
+  opacity: 0;
+
+  transform:
+    translateY(14px)
+    scale(0.78);
+
+  filter: blur(5px);
+
+  transition:
+    opacity 0.18s steps(3, end),
+    transform 0.3s
+      cubic-bezier(0.2, 1.4, 0.4, 1),
+    filter 0.2s ease;
+}
+
+.splash-letter.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Glowing underscore underneath the title */
+
+.splash-title-cursor {
+  display: block;
+
+  width: 42px;
+  height: 4px;
+
+  margin-top: 22px;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 14px var(--splash-glow);
+
+  animation:
+    splash-cursor-pulse
+    0.75s steps(2, end) infinite;
+}
+
+/* =========================================================
+   CHARGED PHASE
+========================================================= */
+
+.splash-charged .splash-mascot-image {
+  animation:
+    splash-mascot-charge
+    1.15s ease-in-out infinite;
+}
+
+.splash-charged .splash-power-ring-1 {
+  opacity: 0.68;
+  animation-duration: 6s;
+}
+
+.splash-charged .splash-power-ring-2 {
+  opacity: 0.39;
+  animation-duration: 8s;
+}
+
+.splash-charged .splash-power-crosshair {
+  opacity: 0.8;
+}
+
+/* =========================================================
+   RADIAL PIXEL EXPLOSION
+========================================================= */
+
+.splash-explosion {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+
+  pointer-events: none;
+}
+
+.splash-fragment {
+  position: absolute;
+
+  top: 43%;
+  left: 50%;
+
+  display: block;
+
+  width: var(--fragment-size);
+  height: var(--fragment-size);
+
+  background: var(--accent);
+
+  opacity: 0;
+
+  box-shadow:
+    0 0 8px var(--splash-glow);
+
+  transform: scale(0);
+}
+
+/* Different pixel / shard shapes */
+
+.splash-fragment:nth-child(3n) {
+  width: calc(var(--fragment-size) * 2);
+  height: 2px;
+}
+
+.splash-fragment:nth-child(4n) {
+  clip-path: polygon(
+    50% 0,
+    100% 50%,
+    50% 100%,
+    0 50%
+  );
+}
+
+.splash-fragment:nth-child(7n) {
+  width: 3px;
+  height: calc(var(--fragment-size) * 3);
+}
+
+.splash-burst .splash-fragment {
+  animation:
+    splash-fragment-burst
+    0.83s
+    cubic-bezier(0.12, 0.65, 0.24, 1)
+    var(--fragment-delay)
+    both;
+}
+
+/* =========================================================
+   IMPACT FLASH
+========================================================= */
+
+.splash-impact-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+
+  background:
+    radial-gradient(
+      circle at 50% 43%,
+      var(--accent) 0%,
+      color-mix(
+        in srgb,
+        var(--accent) 55%,
+        transparent
+      ) 18%,
+      transparent 75%
+    );
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-burst .splash-impact-flash {
+  animation:
+    splash-impact
+    0.48s ease-out both;
+}
+
+/* =========================================================
+   SCREEN CRACK
+========================================================= */
+
+.splash-crack {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--accent);
+
+  opacity: 0;
+  pointer-events: none;
+
+  filter:
+    drop-shadow(
+      0 0 6px var(--splash-glow)
+    );
+}
+
+.splash-crack-lines {
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 3;
+
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.splash-crack-lines path {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+}
+
+.splash-burst .splash-crack {
+  opacity: 0.85;
+}
+
+.splash-burst .splash-crack-lines path {
+  animation:
+    splash-crack-draw
+    0.4s ease-out forwards;
+}
+
+.splash-exit .splash-crack {
+  opacity: 0;
+}
+
+/* =========================================================
+   GLITCH EXIT
+========================================================= */
+
+.splash-burst .splash-center {
+  animation:
+    splash-impact-jolt
+    0.25s steps(4, end) both;
+}
+
+.splash-burst .splash-title-primary,
+.splash-burst .splash-title-secondary {
+  animation:
+    splash-text-glitch
+    0.46s steps(6, end) both;
+}
+
+/* Mascot snaps away into the burst */
+
+.splash-burst .splash-mascot-stage {
+  animation:
+    splash-mascot-disintegrate
+    0.5s ease-in forwards;
+}
+
+.splash-exit {
+  animation:
+    splash-scene-exit
+    0.58s ease-in forwards;
+}
+
+/* Fast horizontal scan streaks during exit */
+
+.splash-exit-panel {
+  position: absolute;
+  z-index: 13;
+
+  left: -110%;
+
+  width: 100%;
+  height: 3px;
+
+  opacity: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--accent),
+      transparent
+    );
+
+  box-shadow:
+    0 0 15px var(--splash-glow);
+}
+
+.splash-exit-panel-top {
+  top: 37%;
+}
+
+.splash-exit-panel-bottom {
+  top: 61%;
+}
+
+.splash-exit .splash-exit-panel-top {
+  animation:
+    splash-exit-streak
+    0.3s ease-in both;
+}
+
+.splash-exit .splash-exit-panel-bottom {
+  animation:
+    splash-exit-streak
+    0.36s 0.07s ease-in both;
+}
+
+/* =========================================================
+   KEYFRAMES — AMBIENT EFFECTS
+========================================================= */
+
+@keyframes splash-grid-drift {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(-32px, -32px);
+  }
+}
+
+@keyframes splash-scan-travel {
+  from {
+    top: -25%;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.7;
+  }
+
+  to {
+    top: 130%;
+    opacity: 0;
+  }
+}
+
+@keyframes splash-halo-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.07);
+  }
+}
+
+@keyframes splash-particle-travel {
+  0% {
+    opacity: 0;
+
+    translate: 0 15px;
+    scale: 0.5;
+  }
+
+  22% {
+    opacity: 0.75;
+  }
+
+  75% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 0;
+
+    translate:
+      var(--travel-x)
+      var(--travel-y);
+
+    scale: 0.2;
+  }
+}
+
+@keyframes splash-ring-clockwise {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg);
+  }
+}
+
+@keyframes splash-ring-counter {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg);
+  }
+}
+
+@keyframes splash-crosshair-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+
+    transform:
+      translate(-50%, -50%)
+      rotate(45deg)
+      scale(0.94);
+  }
+
+  50% {
+    opacity: 0.62;
+
+    transform:
+      translate(-50%, -50%)
+      rotate(45deg)
+      scale(1.04);
+  }
+}
+
+/* =========================================================
+   KEYFRAMES — MASCOT
+========================================================= */
+
+@keyframes splash-mascot-arrive {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate3d(
+        var(--enter-x),
+        var(--enter-y),
+        0
+      )
+      rotate(var(--enter-angle))
+      scale(0.38);
+  }
+
+  65% {
+    opacity: 1;
+
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-5deg)
+      scale(1.12);
+  }
+
+  82% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(3deg)
+      scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translate3d(0, 0, 0)
+      rotate(0deg)
+      scale(1);
+  }
+}
+
+@keyframes splash-mascot-rotate {
+  0% {
+    transform:
+      rotateY(-180deg)
+      rotateZ(-10deg);
+  }
+
+  65% {
+    transform:
+      rotateY(20deg)
+      rotateZ(5deg);
+  }
+
+  100% {
+    transform:
+      rotateY(0deg)
+      rotateZ(0deg);
+  }
+}
+
+@keyframes splash-mascot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes splash-ground-breathe {
+  0%,
+  100% {
+    opacity: 0.17;
+    scale: 1;
+  }
+
+  50% {
+    opacity: 0.09;
+    scale: 0.8;
+  }
+}
+
+@keyframes splash-mascot-charge {
+  0%,
+  100% {
+    filter:
+      drop-shadow(
+        0 0 11px var(--splash-glow)
+      );
+
+    scale: 1;
+  }
+
+  50% {
+    filter:
+      drop-shadow(
+        0 0 26px var(--splash-glow)
+      );
+
+    scale: 1.055;
+  }
+}
+
+/* =========================================================
+   KEYFRAMES — TITLE
+========================================================= */
+
+@keyframes splash-cursor-pulse {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+/* =========================================================
+   KEYFRAMES — IMPACT AND EXIT
+========================================================= */
+
+@keyframes splash-fragment-burst {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(0, 0)
+      rotate(0deg)
+      scale(0.15);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        var(--tx),
+        var(--ty)
+      )
+      rotate(var(--rotation))
+      scale(0.35);
+  }
+}
+
+@keyframes splash-impact {
+  0% {
+    opacity: 0;
+  }
+
+  14% {
+    opacity: 0.48;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes splash-crack-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes splash-impact-jolt {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(-4px, 2px);
+  }
+
+  50% {
+    transform: translate(5px, -3px);
+  }
+
+  75% {
+    transform: translate(-2px, 2px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes splash-text-glitch {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: none;
+  }
+
+  20% {
+    transform: translateX(-8px);
+    filter: blur(1px);
+  }
+
+  40% {
+    transform: translateX(7px);
+    opacity: 0.7;
+  }
+
+  60% {
+    transform: translateX(-4px);
+    filter: blur(2px);
+  }
+
+  80% {
+    transform: translateX(5px);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 0.1;
+  }
+}
+
+@keyframes splash-mascot-disintegrate {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+
+  45% {
+    opacity: 1;
+    transform: scale(1.12);
+    filter: brightness(1.4);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      scale(0.75)
+      rotate(-12deg);
+
+    filter: blur(12px);
+  }
+}
+
+@keyframes splash-scene-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes splash-exit-streak {
+  0% {
+    left: -110%;
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.85;
+  }
+
+  100% {
+    left: 110%;
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .splash-mascot-stage {
+    width: 200px;
+    height: 200px;
+  }
+
+  .splash-mascot-entrance {
+    width: 180px;
+    height: 180px;
+  }
+
+  .splash-power-ring-1 {
+    width: 265px;
+  }
+
+  .splash-power-ring-2 {
+    width: 365px;
+  }
+
+  .splash-power-ring-3 {
+    width: 490px;
+  }
+
+  .splash-power-crosshair {
+    width: 235px;
+    height: 235px;
+  }
+
+  .splash-title-primary {
+    font-size: clamp(
+      68px,
+      13vw,
+      100px
+    );
+  }
+
+  .splash-title-secondary {
+    font-size: clamp(
+      18px,
+      4vw,
+      30px
+    );
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 680px) {
+  .splash-center {
+    width: calc(100% - 28px);
+    padding: 20px 8px;
+  }
+
+  .splash-mascot-stage {
+    width: 178px;
+    height: 178px;
+
+    margin-bottom: 24px;
+  }
+
+  .splash-mascot-entrance {
+    width: 157px;
+    height: 157px;
+  }
+
+  .splash-mascot-ground {
+    bottom: -2px;
+    width: 105px;
+  }
+
+  .splash-title-primary {
+    font-size: clamp(
+      64px,
+      18vw,
+      86px
+    );
+
+    letter-spacing: 0.05em;
+  }
+
+  .splash-title-secondary {
+    font-size: clamp(
+      16px,
+      4.6vw,
+      23px
+    );
+
+    letter-spacing: 0.12em;
+  }
+
+  .splash-title-cursor {
+    width: 32px;
+    height: 3px;
+    margin-top: 18px;
+  }
+
+  .splash-power-ring-1 {
+    width: 215px;
+  }
+
+  .splash-power-ring-2 {
+    width: 305px;
+  }
+
+  .splash-power-ring-3 {
+    width: 390px;
+  }
+
+  .splash-power-crosshair {
+    width: 185px;
+    height: 185px;
+  }
+
+  .splash-energy-particle {
+    box-shadow:
+      0 0 5px var(--splash-glow);
+  }
+
+  .splash-crack-lines {
+    stroke-width: 2.5;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 390px) {
+  .splash-mascot-stage {
+    width: 155px;
+    height: 155px;
+  }
+
+  .splash-mascot-entrance {
+    width: 140px;
+    height: 140px;
+  }
+
+  .splash-title-primary {
+    font-size: 59px;
+  }
+
+  .splash-title-secondary {
+    font-size: 15px;
+    letter-spacing: 0.085em;
+  }
+
+  .splash-power-ring-1 {
+    width: 190px;
+  }
+
+  .splash-power-ring-2 {
+    width: 270px;
+  }
+
+  .splash-power-ring-3 {
+    width: 335px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-grid,
+  .splash-scan-beam,
+  .splash-energy-halo,
+  .splash-energy-particle,
+  .splash-power-ring,
+  .splash-power-crosshair,
+  .splash-mascot-entrance,
+  .splash-mascot-float,
+  .splash-mascot-flip,
+  .splash-mascot-image,
+  .splash-mascot-ground,
+  .splash-title-cursor,
+  .splash-fragment,
+  .splash-crack-lines path,
+  .splash-impact-flash,
+  .splash-exit-panel {
+    animation: none !important;
+  }
+
+  .splash-letter {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .splash-reduced .splash-title-cursor,
+  .splash-reduced .splash-particle-field,
+  .splash-reduced .splash-explosion,
+  .splash-reduced .splash-crack,
+  .splash-reduced .splash-impact-flash {
+    display: none;
+  }
+
+  .splash-reduced.splash-exit {
+    animation:
+      splash-scene-exit
+      0.24s ease-out forwards;
+  }
+}
+
+
+/* =========================================================
+   SPLASH SCREEN — LIGHT THEME
+
+   Higher contrast for light backgrounds.
+   Dark theme remains unchanged.
+========================================================= */
+
+.splash-screen[data-splash-theme="light"] {
+  --light-energy:
+    color-mix(
+      in srgb,
+      var(--accent) 40%,
+      #075c43
+    );
+
+  --light-energy-deep:
+    color-mix(
+      in srgb,
+      var(--accent) 15%,
+      #143b32
+    );
+
+  --light-energy-glow:
+    color-mix(
+      in srgb,
+      var(--light-energy) 35%,
+      transparent
+    );
+
+  --splash-glow: var(--light-energy-glow);
+
+  --splash-glow-soft:
+    color-mix(
+      in srgb,
+      var(--light-energy) 11%,
+      transparent
+    );
+
+  background: var(--bg);
+}
+
+/* =========================================================
+   LIGHT BACKGROUND ATMOSPHERE
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-atmosphere {
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      color-mix(
+        in srgb,
+        var(--light-energy) 13%,
+        var(--bg)
+      ) 0%,
+      var(--bg) 62%
+    );
+}
+
+/* Stronger technical grid */
+
+.splash-screen[data-splash-theme="light"]
+.splash-grid {
+  opacity: 0.48;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(
+        in srgb,
+        var(--light-energy-deep) 18%,
+        transparent
+      ) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(
+        in srgb,
+        var(--light-energy-deep) 18%,
+        transparent
+      ) 1px,
+      transparent 1px
+    );
+}
+
+/* Subtle framing without darkening the center */
+
+.splash-screen[data-splash-theme="light"]
+.splash-vignette {
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 35%,
+      color-mix(
+        in srgb,
+        var(--light-energy-deep) 7%,
+        transparent
+      ) 100%
+    );
+}
+
+/* =========================================================
+   CENTRAL POWER HALO
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-halo {
+  background:
+    radial-gradient(
+      circle,
+      color-mix(
+        in srgb,
+        var(--light-energy) 16%,
+        transparent
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--light-energy) 8%,
+        transparent
+      ) 38%,
+      transparent 72%
+    );
+
+  filter: blur(8px);
+}
+
+/* =========================================================
+   ENERGY RINGS
+
+   Dark emerald rings read much better
+   against the light background.
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-power-ring {
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      var(--light-energy) 0deg 14deg,
+      transparent 14deg 23deg,
+      var(--light-energy-deep) 23deg 26deg,
+      transparent 26deg 45deg
+    );
+
+  filter:
+    drop-shadow(
+      0 0 3px
+      var(--light-energy-glow)
+    );
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-power-ring-1 {
+  opacity: 0.82;
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-power-ring-2 {
+  opacity: 0.54;
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-power-ring-3 {
+  opacity: 0.31;
+}
+
+/* Stronger rings during the charge phase */
+
+.splash-screen[data-splash-theme="light"].splash-charged
+.splash-power-ring-1 {
+  opacity: 1;
+}
+
+.splash-screen[data-splash-theme="light"].splash-charged
+.splash-power-ring-2 {
+  opacity: 0.76;
+}
+
+/* =========================================================
+   CROSSHAIR DESIGN
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-power-crosshair {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--light-energy) 45%,
+      transparent
+    );
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-power-crosshair::before,
+.splash-screen[data-splash-theme="light"]
+.splash-power-crosshair::after {
+  background: var(--light-energy-deep);
+
+  box-shadow:
+    0 0 5px var(--light-energy-glow);
+}
+
+/* =========================================================
+   MOVING PARTICLES
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-particle {
+  background: var(--light-energy);
+
+  box-shadow:
+    0 0 3px
+      color-mix(
+        in srgb,
+        var(--light-energy) 45%,
+        transparent
+      );
+}
+
+/* Diamond spark */
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-diamond {
+  background: var(--light-energy-deep);
+}
+
+/* Long pixel energy trails */
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-dash {
+  background: var(--light-energy);
+
+  box-shadow:
+    0 0 5px var(--light-energy-glow);
+}
+
+/* Cross shapes */
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-cross {
+  background: transparent;
+  box-shadow: none;
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-cross::before,
+.splash-screen[data-splash-theme="light"]
+.splash-energy-cross::after {
+  background: var(--light-energy-deep);
+
+  box-shadow:
+    0 0 4px var(--light-energy-glow);
+}
+
+/* Four-point sparks */
+
+.splash-screen[data-splash-theme="light"]
+.splash-energy-spark {
+  background: var(--light-energy-deep);
+}
+
+/* =========================================================
+   MOVING SCAN BEAM
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-scan-beam {
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--light-energy) 35%,
+      var(--light-energy-deep) 50%,
+      var(--light-energy) 65%,
+      transparent 100%
+    );
+
+  box-shadow:
+    0 0 8px var(--light-energy-glow);
+
+  opacity: 0.85;
+}
+
+/* =========================================================
+   MASCOT — LIGHT THEME
+
+   Keep the dark lineart sharp.
+   Avoid excessive glowing around the avatar.
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-mascot-image {
+  filter:
+    drop-shadow(
+      0 9px 11px
+      color-mix(
+        in srgb,
+        var(--light-energy-deep) 24%,
+        transparent
+      )
+    );
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-mascot-ground {
+  background: var(--light-energy-deep);
+  opacity: 0.23;
+}
+
+/* Stronger energy aura only while charging */
+
+.splash-screen[data-splash-theme="light"].splash-charged
+.splash-mascot-image {
+  animation:
+    splash-light-mascot-charge
+    1.15s ease-in-out infinite;
+}
+
+@keyframes splash-light-mascot-charge {
+  0%,
+  100% {
+    filter:
+      drop-shadow(
+        0 7px 9px
+        color-mix(
+          in srgb,
+          var(--light-energy-deep) 18%,
+          transparent
+        )
+      );
+
+    scale: 1;
+  }
+
+  50% {
+    filter:
+      drop-shadow(
+        0 0 11px
+        color-mix(
+          in srgb,
+          var(--light-energy) 48%,
+          transparent
+        )
+      );
+
+    scale: 1.055;
+  }
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-title-primary {
+  color: var(--light-energy-deep);
+
+  text-shadow:
+    2px 2px 0
+    color-mix(
+      in srgb,
+      var(--light-energy) 13%,
+      transparent
+    );
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-title-secondary {
+  color: var(--light-energy);
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-title-cursor {
+  background: var(--light-energy);
+
+  box-shadow:
+    0 0 7px var(--light-energy-glow);
+}
+
+/* =========================================================
+   PIXEL EXPLOSION
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-fragment {
+  background: var(--light-energy);
+
+  box-shadow:
+    0 0 5px var(--light-energy-glow);
+}
+
+/* Alternate darker fragments */
+
+.splash-screen[data-splash-theme="light"]
+.splash-fragment:nth-child(3n) {
+  background: var(--light-energy-deep);
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-fragment:nth-child(5n) {
+  background:
+    color-mix(
+      in srgb,
+      var(--light-energy) 65%,
+      var(--bg)
+    );
+}
+
+/* =========================================================
+   SCREEN CRACK
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-crack {
+  color: var(--light-energy-deep);
+
+  filter:
+    drop-shadow(
+      0 0 3px var(--light-energy-glow)
+    );
+}
+
+.splash-screen[data-splash-theme="light"]
+.splash-crack-lines {
+  stroke-width: 3.5;
+}
+
+/* =========================================================
+   IMPACT FLASH
+
+   Use an emerald impact instead of
+   a pale neon flash that disappears
+   against the light background.
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-impact-flash {
+  background:
+    radial-gradient(
+      circle at 50% 43%,
+      color-mix(
+        in srgb,
+        var(--light-energy) 65%,
+        transparent
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--light-energy) 24%,
+        transparent
+      ) 23%,
+      transparent 67%
+    );
+}
+
+/* =========================================================
+   GLITCH EXIT STREAKS
+========================================================= */
+
+.splash-screen[data-splash-theme="light"]
+.splash-exit-panel {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--light-energy-deep),
+      var(--light-energy),
+      transparent
+    );
+
+  box-shadow:
+    0 0 7px var(--light-energy-glow);
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen[data-splash-theme="light"]
+  .splash-mascot-image {
+    animation: none !important;
+  }
+}

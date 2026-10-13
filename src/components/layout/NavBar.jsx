@@ -1,8 +1,5 @@
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
 import {
   Menu,
@@ -24,7 +21,7 @@ import { VisitorAvatars } from "../common/VisitorAvatars";
 import { MobileNav } from "./MobileNav";
 
 /* =========================================================
-   CONFIGURATION
+   NAVIGATION CONFIG
 ========================================================= */
 
 const sectionIds = navigation.map((link) =>
@@ -52,10 +49,12 @@ export default function NavBar() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const activeSection = useActiveSection(sectionIds);
+  const activeSection = useActiveSection(
+    sectionIds
+  );
 
   /* =======================================================
-     SHARED LIVE VISITOR DATA
+     REAL-TIME VISITOR DATA
   ======================================================= */
 
   const {
@@ -65,20 +64,21 @@ export default function NavBar() {
   } = useLiveVisitors();
 
   /* =======================================================
-     THEME SWITCHING
+     THEME TOGGLE
   ======================================================= */
 
   const ThemeIcon =
     themeIcons[preference] ?? Monitor;
 
   const cycleTheme = () => {
-    const index = themeModes.indexOf(preference);
-
-    setPreference(
-      themeModes[
-        (index + 1) % themeModes.length
-      ]
+    const index = themeModes.indexOf(
+      preference
     );
+
+    const nextIndex =
+      (index + 1) % themeModes.length;
+
+    setPreference(themeModes[nextIndex]);
   };
 
   /* =======================================================
@@ -88,10 +88,6 @@ export default function NavBar() {
   const closeMenu = () => {
     setMenuOpen(false);
   };
-
-  /* =======================================================
-     BODY SCROLL LOCK
-  ======================================================= */
 
   useEffect(() => {
     document.body.classList.toggle(
@@ -105,10 +101,6 @@ export default function NavBar() {
       );
     };
   }, [menuOpen]);
-
-  /* =======================================================
-     DESKTOP BREAKPOINT
-  ======================================================= */
 
   useEffect(() => {
     const media = window.matchMedia(
@@ -163,13 +155,8 @@ export default function NavBar() {
             </span>
 
             <span className="brand-copy">
-              <strong>
-                {site.shortName}
-              </strong>
-
-              <small>
-                {site.role}
-              </small>
+              <strong>{site.shortName}</strong>
+              <small>{site.role}</small>
             </span>
           </a>
 
@@ -202,7 +189,7 @@ export default function NavBar() {
                       : undefined
                   }
                 >
-                  {link.label}
+                  <span>{link.label}</span>
                 </a>
               );
             })}
@@ -211,16 +198,12 @@ export default function NavBar() {
           {/* ACTIONS */}
 
           <div className="nav-actions">
-            {/* LIVE VISITORS */}
-
             <VisitorAvatars
               visitorCount={visitorCount}
               visitors={visitors}
               status={visitorStatus}
               variant="navbar"
             />
-
-            {/* THEME */}
 
             <button
               type="button"
@@ -236,12 +219,12 @@ export default function NavBar() {
               />
             </button>
 
-            {/* MOBILE MENU */}
-
             <button
               type="button"
               className="icon-button menu-button"
-              onClick={() => setMenuOpen(true)}
+              onClick={() =>
+                setMenuOpen(true)
+              }
               aria-label="Open navigation menu"
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
@@ -256,16 +239,16 @@ export default function NavBar() {
         </nav>
       </header>
 
-      {/* MOBILE DRAWER */}
+      {/* SHARED LIVE VISITORS */}
 
-      <MobileNav
+     <MobileNav
         open={menuOpen}
         links={navigation}
         activeSection={activeSection}
         visitorCount={visitorCount}
         visitors={visitors}
         visitorStatus={visitorStatus}
-        onClose={closeMenu}
+        onClose={() => setMenuOpen(false)}
       />
     </>
   );

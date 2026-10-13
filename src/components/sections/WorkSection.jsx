@@ -13,30 +13,11 @@ export function WorkSection() {
     >
       <SectionHeading
         number="01"
-        title="Selected work"
-        subtitle="Products built around real users, real workflows, and maintainable systems."
+        title="My Works"
+        subtitle="Deployed works — the spotlighted ones first, then everything else."
       />
 
-      {/* PROJECT METRICS */}
-
-      {projectStats?.length > 0 && (
-        <div
-          className="metric-strip"
-          data-reveal
-        >
-          {projectStats.map((stat) => (
-            <div
-              className="metric"
-              key={stat.label}
-            >
-              <strong>{stat.value}</strong>
-
-              <span>{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      )}
-
+  
       {/* PROJECT GALLERY */}
 
       <div className="project-list">

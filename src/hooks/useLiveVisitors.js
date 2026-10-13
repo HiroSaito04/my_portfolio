@@ -1,8 +1,5 @@
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
 import { supabase } from "../lib/supabase";
 
@@ -11,50 +8,86 @@ import { supabase } from "../lib/supabase";
 ========================================================= */
 
 const CHANNEL_NAME = "portfolio-live-visitors";
-const STORAGE_KEY = "mr-portfolio-visitor-id";
+
+const VISITOR_ID_KEY = "mr-portfolio-visitor-id";
+const AVATAR_KEY = "mr-portfolio-mascot-v3";
 
 const AVATAR_COUNT = 5;
 
 /* =========================================================
-   ANONYMOUS BROWSER ID
-
-   Reuses one ID across tabs in the same browser.
-   No email, name, or account is required.
+   RANDOM AVATAR SELECTION
 ========================================================= */
 
-function getVisitorId() {
+function getRandomAvatar() {
+  if (
+    typeof crypto !== "undefined" &&
+    crypto.getRandomValues
+  ) {
+    const values = new Uint32Array(1);
+
+    crypto.getRandomValues(values);
+
+    return values[0] % AVATAR_COUNT;
+  }
+
+  return Math.floor(Math.random() * AVATAR_COUNT);
+}
+
+/* =========================================================
+   BROWSER IDENTITY
+========================================================= */
+
+function getVisitorIdentity() {
+  const fallbackId =
+    typeof crypto !== "undefined" &&
+    crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random()}`;
+
   try {
-    let id = window.localStorage.getItem(STORAGE_KEY);
+    let id = localStorage.getItem(VISITOR_ID_KEY);
 
     if (!id) {
-      id = crypto.randomUUID();
-      window.localStorage.setItem(STORAGE_KEY, id);
+      id = fallbackId;
+      localStorage.setItem(VISITOR_ID_KEY, id);
     }
 
-    return id;
+    const savedAvatar = localStorage.getItem(
+      AVATAR_KEY
+    );
+
+    let avatarIndex =
+      savedAvatar !== null
+        ? Number(savedAvatar)
+        : NaN;
+
+    if (
+      !Number.isInteger(avatarIndex) ||
+      avatarIndex < 0 ||
+      avatarIndex >= AVATAR_COUNT
+    ) {
+      avatarIndex = getRandomAvatar();
+
+      localStorage.setItem(
+        AVATAR_KEY,
+        String(avatarIndex)
+      );
+    }
+
+    return {
+      id,
+      avatarIndex,
+    };
   } catch {
-    return crypto.randomUUID();
+    return {
+      id: fallbackId,
+      avatarIndex: getRandomAvatar(),
+    };
   }
 }
 
 /* =========================================================
-   CONSISTENT AVATAR SELECTION
-========================================================= */
-
-function getAvatarIndex(id) {
-  let hash = 0;
-
-  for (let i = 0; i < id.length; i++) {
-    hash = (
-      (hash * 31) + id.charCodeAt(i)
-    ) >>> 0;
-  }
-
-  return hash % AVATAR_COUNT;
-}
-
-/* =========================================================
-   REALTIME VISITOR HOOK
+   LIVE VISITOR HOOK
 ========================================================= */
 
 export function useLiveVisitors() {
@@ -75,55 +108,74 @@ export function useLiveVisitors() {
 
     let mounted = true;
 
-    const visitorId = getVisitorId();
+    const identity = getVisitorIdentity();
+
+    /* =====================================================
+       CREATE REALTIME CHANNEL
+    ===================================================== */
 
     const channel = supabase.channel(
       CHANNEL_NAME,
       {
         config: {
           presence: {
-            key: visitorId,
+            key: identity.id,
           },
         },
       }
     );
 
-    /* ===============================================
-       READ THE ACTUAL PRESENCE STATE
-    ================================================ */
+    /* =====================================================
+       SYNC ACTIVE VISITORS
+    ===================================================== */
 
     const syncVisitors = () => {
       if (!mounted) return;
 
       const presenceState = channel.presenceState();
 
-      const activeVisitors = Object.entries(
+      const currentVisitors = Object.entries(
         presenceState
       )
         .filter(
-          ([, presences]) =>
-            Array.isArray(presences) &&
-            presences.length > 0
+          ([, sessions]) =>
+            Array.isArray(sessions) &&
+            sessions.length > 0
         )
-        .map(([id, presences]) => ({
-          id,
-          avatarIndex:
-            typeof presences[0]?.avatarIndex === "number"
-              ? presences[0].avatarIndex % AVATAR_COUNT
-              : getAvatarIndex(id),
-        }))
-        .sort((a, b) =>
-          a.id.localeCompare(b.id)
-        );
+        .map(([id, sessions]) => {
+          const sessionWithAvatar = sessions.find(
+            (session) =>
+              Number.isInteger(
+                session.avatarIndex
+              ) &&
+              session.avatarIndex >= 0 &&
+              session.avatarIndex < AVATAR_COUNT
+          );
 
-      setVisitors(activeVisitors);
-      setVisitorCount(activeVisitors.length);
+          return {
+            id,
+            avatarIndex:
+              sessionWithAvatar?.avatarIndex ?? 0,
+          };
+        });
+
+      /* Show the current browser first. */
+
+      currentVisitors.sort((a, b) => {
+        if (a.id === identity.id) return -1;
+        if (b.id === identity.id) return 1;
+
+        return a.id.localeCompare(b.id);
+      });
+
+      setVisitors(currentVisitors);
+      setVisitorCount(currentVisitors.length);
       setStatus("connected");
     };
 
-    /* ===============================================
-       LISTEN FOR CHANGES
-    ================================================ */
+    /* =====================================================
+       LISTEN FOR PRESENCE CHANGES
+    ===================================================== */
 
     channel.on(
       "presence",
@@ -131,29 +183,38 @@ export function useLiveVisitors() {
       syncVisitors
     );
 
-    /* ===============================================
-       CONNECT AND REGISTER THIS BROWSER
-    ================================================ */
+    /* =====================================================
+       JOIN CHANNEL
+    ===================================================== */
 
     channel.subscribe(async (channelStatus) => {
       if (!mounted) return;
 
       if (channelStatus === "SUBSCRIBED") {
-        const result = await channel.track({
-          avatarIndex: getAvatarIndex(visitorId),
-          online_at: new Date().toISOString(),
-        });
+        try {
+          const result = await channel.track({
+            avatarIndex: identity.avatarIndex,
+            joined_at: new Date().toISOString(),
+          });
 
-        if (!mounted) return;
+          if (!mounted) return;
 
-        if (result !== "ok") {
+          if (result !== "ok") {
+            throw new Error(
+              "Presence tracking failed."
+            );
+          }
+        } catch (error) {
+          if (!mounted) return;
+
+          console.error(
+            "Visitor tracking error:",
+            error
+          );
+
           setStatus("error");
           setVisitorCount(null);
           setVisitors([]);
-          console.error(
-            "Could not register visitor presence:",
-            result
-          );
         }
 
         return;
@@ -170,14 +231,13 @@ export function useLiveVisitors() {
       }
     });
 
-    /* ===============================================
-       CLEANUP WHEN SITE IS CLOSED
-    ================================================ */
+    /* =====================================================
+       CLEANUP
+    ===================================================== */
 
     return () => {
       mounted = false;
-
-      supabase.removeChannel(channel);
+      void supabase.removeChannel(channel);
     };
   }, []);
 

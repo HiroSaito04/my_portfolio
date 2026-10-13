@@ -1,8 +1,5 @@
 
-import {
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 
 import {
   ArrowUpRight,
@@ -18,6 +15,7 @@ import {
 
 import { site } from "../../config/site";
 import { useTheme } from "../../context/ThemeContext";
+
 import { VisitorAvatars } from "../common/VisitorAvatars";
 
 /* =========================================================
@@ -25,21 +23,9 @@ import { VisitorAvatars } from "../common/VisitorAvatars";
 ========================================================= */
 
 const themeOptions = [
-  {
-    value: "system",
-    label: "System theme",
-    Icon: Monitor,
-  },
-  {
-    value: "light",
-    label: "Light theme",
-    Icon: Sun,
-  },
-  {
-    value: "dark",
-    label: "Dark theme",
-    Icon: Moon,
-  },
+  { value: "system", label: "System theme", Icon: Monitor },
+  { value: "light", label: "Light theme", Icon: Sun },
+  { value: "dark", label: "Dark theme", Icon: Moon },
 ];
 
 /* =========================================================
@@ -49,9 +35,7 @@ const themeOptions = [
 const contactLinks = [
   {
     label: site.email,
-    href: site.email
-      ? `mailto:${site.email}`
-      : null,
+    href: site.email ? `mailto:${site.email}` : null,
     Icon: Mail,
     external: false,
   },
@@ -94,7 +78,7 @@ export function MobileNav({
   const closeButtonRef = useRef(null);
 
   /* =======================================================
-     RESTORE KEYBOARD FOCUS
+     FOCUS MANAGEMENT
   ======================================================= */
 
   useEffect(() => {
@@ -115,14 +99,12 @@ export function MobileNav({
   }, [open]);
 
   /* =======================================================
-     ESCAPE + FOCUS TRAP
+     KEYBOARD SUPPORT
   ======================================================= */
 
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
       event.preventDefault();
-      event.stopPropagation();
-
       onClose();
       return;
     }
@@ -169,15 +151,11 @@ export function MobileNav({
 
   return (
     <div className="mobile-drawer">
-      {/* BACKDROP */}
-
       <div
         className="mobile-drawer-backdrop"
         onClick={onClose}
         aria-hidden="true"
       />
-
-      {/* DRAWER PANEL */}
 
       <aside
         ref={panelRef}
@@ -206,13 +184,8 @@ export function MobileNav({
               </span>
 
               <span className="drawer-brand-copy">
-                <strong>
-                  {site.shortName}
-                </strong>
-
-                <small>
-                  {site.role}
-                </small>
+                <strong>{site.shortName}</strong>
+                <small>{site.role}</small>
               </span>
             </a>
 
@@ -247,8 +220,7 @@ export function MobileNav({
                   ""
                 );
 
-                const isActive =
-                  activeSection === id;
+                const isActive = activeSection === id;
 
                 const href = link.href.startsWith("/")
                   ? link.href
@@ -258,21 +230,14 @@ export function MobileNav({
                   <a
                     key={link.href}
                     href={href}
-                    className={
-                      isActive ? "active" : ""
-                    }
+                    className={isActive ? "active" : ""}
                     aria-current={
-                      isActive
-                        ? "location"
-                        : undefined
+                      isActive ? "location" : undefined
                     }
                     onClick={onClose}
                   >
                     <span className="drawer-link-index">
-                      {String(index + 1).padStart(
-                        2,
-                        "0"
-                      )}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
 
                     <span className="drawer-link-label">
@@ -289,9 +254,12 @@ export function MobileNav({
             </nav>
           </div>
 
-          {/* REAL-TIME VISITORS */}
+          {/* LIVE VISITORS */}
 
-          <div className="drawer-visitors">
+         <section
+            className="drawer-visitors"
+            aria-label="Live site visitors"
+          >
             <span className="drawer-section-label">
               LIVE VISITORS
             </span>
@@ -302,58 +270,54 @@ export function MobileNav({
               status={visitorStatus}
               variant="drawer"
             />
-          </div>
+          </section>
 
           {/* BOTTOM */}
 
           <div className="drawer-bottom">
-            {/* THEME */}
+            <div>
+              <div className="drawer-theme-header">
+                <span className="drawer-section-label">
+                  APPEARANCE
+                </span>
 
-            <div className="drawer-theme-header">
-              <span className="drawer-section-label">
-                APPEARANCE
-              </span>
+                <span className="drawer-theme-current">
+                  {preference}
+                </span>
+              </div>
 
-              <span className="drawer-theme-current">
-                {preference}
-              </span>
-            </div>
+              <div
+                className="drawer-theme-switch"
+                role="group"
+                aria-label="Color theme"
+              >
+                {themeOptions.map(
+                  ({ value, label, Icon }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={`drawer-theme-option ${
+                        preference === value
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setPreference(value)
+                      }
+                      aria-label={label}
+                      aria-pressed={preference === value}
+                      title={label}
+                    >
+                      <Icon
+                        size={18}
+                        aria-hidden="true"
+                      />
 
-            <div
-              className="drawer-theme-switch"
-              role="group"
-              aria-label="Color theme"
-            >
-              {themeOptions.map(
-                ({ value, label, Icon }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    className={`drawer-theme-option ${
-                      preference === value
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      setPreference(value)
-                    }
-                    aria-label={label}
-                    aria-pressed={
-                      preference === value
-                    }
-                    title={label}
-                  >
-                    <Icon
-                      size={18}
-                      aria-hidden="true"
-                    />
-
-                    <span>
-                      {value}
-                    </span>
-                  </button>
-                )
-              )}
+                      <span>{value}</span>
+                    </button>
+                  )
+                )}
+              </div>
             </div>
 
             {/* CONTACT */}
@@ -397,9 +361,7 @@ export function MobileNav({
                           aria-hidden="true"
                         />
 
-                        <span>
-                          {label}
-                        </span>
+                        <span>{label}</span>
 
                         {external && (
                           <ArrowUpRight

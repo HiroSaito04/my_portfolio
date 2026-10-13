@@ -1,6 +1,9 @@
 
-import { Hero } from "../components/sections/Hero";
+import { useState } from "react";
 
+import { SplashScreen } from "../components/common/SplashScreen";
+
+import { Hero } from "../components/sections/Hero";
 import { WorkSection } from "../components/sections/WorkSection";
 import { StackSection } from "../components/sections/StackSection";
 import { AboutSection } from "../components/sections/AboutSection";
@@ -13,17 +16,28 @@ import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 ========================================================= */
 
 export function Home() {
+  const [showSplash, setShowSplash] = useState(true);
+
   const revealRef = useRevealOnScroll();
 
   return (
-    <div className="home-sections" ref={revealRef}>
-      <Hero />
+    <>
+      {showSplash && (
+        <SplashScreen
+          onFinish={() => setShowSplash(false)}
+        />
+      )}
 
-      <WorkSection />
-      <StackSection />
-      <AboutSection />
-      <ContactSection />
-      
-    </div>
+      <div
+        className="home-sections"
+        ref={revealRef}
+      >
+        <Hero startTyping={!showSplash} />
+        <WorkSection />
+        <StackSection />
+        <AboutSection />
+        <ContactSection />
+      </div>
+    </>
   );
 }
