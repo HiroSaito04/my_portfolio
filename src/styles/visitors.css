@@ -1,0 +1,328 @@
+
+/* =========================================================
+   LIVE VISITOR WIDGET
+========================================================= */
+
+.visitor-presence {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+
+  min-width: 0;
+
+  color: var(--text);
+}
+
+/* =========================================================
+   ILLUSTRATED AVATARS
+========================================================= */
+
+.visitor-presence-avatars {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  padding-left: 2px;
+}
+
+.visitor-presence-avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 29px;
+  height: 29px;
+  margin-left: -7px;
+
+  overflow: hidden;
+
+  border: 2px solid var(--panel);
+  border-radius: 50%;
+
+  background: var(--panel-2);
+  color: var(--text);
+
+  font-size: 15px;
+  line-height: 1;
+  user-select: none;
+}
+
+.visitor-presence-avatar:first-child {
+  margin-left: 0;
+}
+
+.visitor-presence-avatar--0 {
+  background: color-mix(
+    in srgb,
+    var(--accent) 16%,
+    var(--panel)
+  );
+}
+
+.visitor-presence-avatar--1 {
+  background: var(--panel-2);
+}
+
+.visitor-presence-avatar--2 {
+  background: color-mix(
+    in srgb,
+    var(--accent) 9%,
+    var(--bg)
+  );
+}
+
+.visitor-presence-avatar--3 {
+  background: color-mix(
+    in srgb,
+    var(--text) 7%,
+    var(--panel)
+  );
+}
+
+.visitor-presence-avatar--4 {
+  background: color-mix(
+    in srgb,
+    var(--accent) 22%,
+    var(--panel)
+  );
+}
+
+/* =========================================================
+   VISITOR COUNT
+========================================================= */
+
+.visitor-presence-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.visitor-presence-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--muted);
+}
+
+.visitor-presence.is-connected
+.visitor-presence-dot {
+  background: var(--accent);
+}
+
+.visitor-presence-count {
+  color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.visitor-presence-label {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* =========================================================
+   NAVBAR VARIANT
+========================================================= */
+
+.visitor-presence--navbar {
+  justify-content: center;
+
+  min-height: 43px;
+  padding: 5px 12px 5px 7px;
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  background: var(--bg);
+}
+
+.navbar-shell .nav-actions {
+  gap: 9px;
+}
+
+/* =========================================================
+   MOBILE DRAWER VARIANT
+========================================================= */
+
+.drawer-visitors {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+
+  padding: 21px 0;
+  margin-top: 22px;
+
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.visitor-presence--drawer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  width: 100%;
+  min-height: 63px;
+  padding: 12px 15px;
+
+  border: 1px solid var(--line);
+  border-radius: 11px;
+
+  background: var(--panel);
+}
+
+.visitor-presence--drawer
+.visitor-presence-avatar {
+  width: 35px;
+  height: 35px;
+
+  font-size: 18px;
+
+  border-color: var(--panel);
+}
+
+.visitor-presence--drawer
+.visitor-presence-info {
+  gap: 8px;
+}
+
+.visitor-presence--drawer
+.visitor-presence-count {
+  font-size: 15px;
+}
+
+.visitor-presence--drawer
+.visitor-presence-label {
+  font-size: 12px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .visitor-presence--navbar {
+    min-height: 40px;
+    padding: 5px 10px 5px 7px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-avatar {
+    width: 27px;
+    height: 27px;
+
+    font-size: 14px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-count {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .visitor-presence--navbar {
+    gap: 6px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-label {
+    display: none;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-avatar {
+    width: 25px;
+    height: 25px;
+
+    font-size: 13px;
+
+    margin-left: -8px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-avatar:first-child {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .navbar-shell .nav-actions {
+    gap: 5px;
+  }
+
+  .visitor-presence--navbar {
+    min-height: 36px;
+    padding: 5px 8px;
+    gap: 5px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-avatar {
+    width: 23px;
+    height: 23px;
+
+    font-size: 12px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-avatar:nth-child(n + 3) {
+    display: none;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-info {
+    gap: 4px;
+  }
+
+  .visitor-presence--navbar
+  .visitor-presence-count {
+    font-size: 11px;
+  }
+
+  .visitor-presence--drawer
+  .visitor-presence-avatar {
+    width: 32px;
+    height: 32px;
+
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   EXTRA SMALL SCREENS
+========================================================= */
+
+@media (max-width: 350px) {
+  .visitor-presence--navbar
+  .visitor-presence-avatar:nth-child(n + 2) {
+    display: none;
+  }
+
+  .navbar-shell .brand-copy small {
+    display: none;
+  }
+}

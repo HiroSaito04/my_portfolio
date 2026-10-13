@@ -3,7 +3,7 @@
   {
     "id": "rotompc",
     "name": "RotomPC",
-    "category": "Web · Mobile · Social Platform",
+    "category": "Web · Mobile · Game · Social Platform",
     "featured": true,
     "description": "A Pokémon-inspired PC terminal experience with a Pokédex, social features, trainer profiles, an AI chatbot, buddy-pet simulation, and administrative moderation tools. Built to work across desktop and mobile viewports.",
     "tags": [
@@ -37,16 +37,16 @@
   },
   {
     "id": "pathforward",
-    "name": "PathForward",
-    "category": "Web · Mobile · Career Platform",
+    "name": "PathForward Web",
+    "category": "Web · Administrative Platform",
     "featured": false,
-    "description": "A career-development platform supporting job seekers through structured assessments, guided learning, and responsive web and mobile experiences, with administrative and adviser-facing workflows.",
+    "description": "An web platform designed for pathforward mobile application porting and administrative features of the pathforward system including user management, job role management, system reports, and etc...",
     "tags": [
       "React",
       "Node.js",
       "REST APIs",
-      "MySQL",
-      "Mobile"
+      "MongoDB",
+      "JavaScript"
     ],
     "highlights": [],
     "preview": {
@@ -55,11 +55,42 @@
       "image": "/projects/pathforward.png",
       "video": "/projects/pathforward_vid.mp4",
       "poster": "/projects/pathforward.png",
-      "alt": "PathForward application screenshot",
+      "alt": "PathForward website screenshot",
       "link": "https://pathforward-web.onrender.com/"
     },
     "links": {
       "live": "https://pathforward-web.onrender.com/",
+      "github": null,
+      "demo": null,
+      "design": null,
+      "caseStudy": null
+    }
+  },
+  {
+    "id": "pathforward-mobile",
+    "name": "PathForward Mobile App",
+    "category": "Mobile · Career and Learning Platform",
+    "featured": true,
+    "description": "A career-development platform supporting job seekers through structured assessments, guided learning, and responsive web and mobile experiences, with administrative and adviser-facing workflows.",
+    "tags": [
+      "Dart",
+      "Flutter",
+      "Firebase",
+      "Node.js"
+    ],
+    "highlights": [
+    ],
+    "preview": {
+      "layout": "mobile",
+      "embed": true,
+      "image": null,
+      "video": null,
+      "poster": null,
+      "alt": "Pathforward moble screenshot",
+      "link": null
+    },
+    "links": {
+      "live": null,
       "github": null,
       "demo": null,
       "design": null,

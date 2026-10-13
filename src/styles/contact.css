@@ -4,41 +4,108 @@
 ========================================================= */
 
 .contact-section {
-  padding: 70px 0 75px;
+  width: min(calc(100% - 40px), var(--max));
+  margin-inline: auto;
+  padding: clamp(70px, 8vw, 110px) 0;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1.25fr);
+  align-items: start;
+  gap: clamp(40px, 6vw, 100px);
+}
+
+/* =========================================================
+   LEFT — INTRODUCTION
+========================================================= */
+
+.contact-content {
+  min-width: 0;
 }
 
 .contact-kicker {
-  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 
-  font-family: "DM Mono", monospace;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
+  margin-bottom: 28px;
+  padding: 10px 14px;
 
-.contact-section h2 {
-  max-width: 900px;
-  margin: 18px 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
 
   color: var(--text);
 
-  font-size: clamp(42px, 6vw, 72px);
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.contact-kicker-dot {
+  display: block;
+
+  width: 7px;
+  height: 7px;
+
+  background: var(--accent);
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.contact-content h2 {
+  max-width: 650px;
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: clamp(44px, 4.6vw, 76px);
   font-weight: 600;
   line-height: 1.08;
   letter-spacing: -0.065em;
 }
 
-.contact-section > p {
-  max-width: 650px;
+.contact-content h2 span {
+  color: var(--muted);
+}
+
+.contact-description {
+  max-width: 480px;
+  margin: 28px 0 0;
 
   color: var(--muted);
-  font-size: 17px;
-  line-height: 1.75;
+
+  font-size: 16px;
+  line-height: 1.85;
 }
 
 /* =========================================================
-   CONTACT EMAIL
+   CONTACT INFORMATION
 ========================================================= */
+
+.contact-info {
+  margin-top: 39px;
+}
+
+.contact-info-label {
+  display: block;
+
+  margin-bottom: 14px;
+
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.09em;
+}
 
 .contact-email-row {
   display: flex;
@@ -46,110 +113,391 @@
   flex-wrap: wrap;
   gap: 12px;
 
-  margin-top: 28px;
+  min-width: 0;
 }
 
-.contact-email {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-
-  max-width: 100%;
-  margin: 0;
-  padding: 12px 0;
-
-  border-bottom: 2px solid var(--accent);
-
-  color: var(--text);
-
-  font-size: clamp(20px, 3vw, 32px);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.04em;
-  overflow-wrap: anywhere;
-}
-
-.contact-email svg {
+.contact-email-row > svg {
   flex-shrink: 0;
   color: var(--accent);
 }
 
-/* =========================================================
-   COPY EMAIL BUTTON
-========================================================= */
+.contact-email {
+  min-width: 0;
+  padding-bottom: 3px;
 
-.copy-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  border-bottom: 1px solid var(--line);
 
-  min-height: 44px;
-  padding: 10px 15px;
-
-  border: 1px solid var(--line);
-  border-radius: 10px;
-
-  background: var(--panel);
   color: var(--text);
 
-  font-size: 14px;
+  font-size: clamp(15px, 1.4vw, 19px);
   font-weight: 600;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contact-email:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.contact-copy {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid var(--line);
+  border-radius: 5px;
+
+  background: var(--panel);
+  color: var(--muted);
 
   cursor: pointer;
 
   transition:
     background 0.2s ease,
+    color 0.2s ease,
     border-color 0.2s ease;
 }
 
-.copy-button:hover {
+.contact-copy:hover {
   border-color: var(--accent);
   background: var(--panel-2);
+  color: var(--accent);
 }
 
 /* =========================================================
-   CONTACT SOCIAL LINKS
+   SOCIAL LINKS
 ========================================================= */
 
-.contact-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-
-  margin-top: 30px;
+.contact-socials {
+  margin-top: 39px;
 }
 
-.contact-links a {
+.contact-social-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contact-social-list a {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 16px;
 
-  min-height: 48px;
-  padding: 12px 18px;
+  min-height: 42px;
+  padding: 10px 13px;
 
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 5px;
 
   background: var(--panel);
   color: var(--text);
 
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
 
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.contact-links a svg {
+.contact-social-list a svg {
+  flex-shrink: 0;
   color: var(--accent);
 }
 
-.contact-links a:hover {
+.contact-social-list a:hover {
   background: var(--panel-2);
   border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   RIGHT — FORM PANEL
+========================================================= */
+
+.contact-form-wrap {
+  min-width: 0;
+
+  padding: clamp(23px, 2.7vw, 38px);
+
+  border: 1px solid var(--text);
+  border-radius: 2px;
+
+  background: var(--panel);
+
+  box-shadow: 7px 7px 0 var(--text);
+}
+
+/* =========================================================
+   FORM HEADER
+========================================================= */
+
+.contact-form-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-bottom: 29px;
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.contact-form-eyebrow {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: var(--accent);
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+}
+
+.contact-form-top h3 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: clamp(21px, 2.3vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.contact-form-symbol {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid var(--line);
+  border-radius: 5px;
+
+  color: var(--accent);
+}
+
+/* =========================================================
+   FORM LAYOUT
+========================================================= */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.contact-form-row {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.contact-field label {
+  color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.045em;
+}
+
+.contact-field label span {
+  color: var(--accent);
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.contact-field input,
+.contact-field textarea {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 15px 16px;
+
+  border: 1px solid var(--line);
+  border-radius: 3px;
+
+  outline: none;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.contact-field input {
+  min-height: 54px;
+}
+
+.contact-field textarea {
+  min-height: 190px;
+  resize: vertical;
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.72;
+}
+
+.contact-field input:hover,
+.contact-field textarea:hover {
+  border-color: var(--muted);
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: var(--accent);
+  background: var(--panel-2);
+
+  box-shadow:
+    0 0 0 2px var(--accent);
+}
+
+/* =========================================================
+   SUBMIT AREA
+========================================================= */
+
+.contact-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-top: 2px;
+}
+
+.contact-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+
+  min-height: 52px;
+  padding: 14px 20px;
+
+  border: 1px solid var(--text);
+  border-radius: 3px;
+
+  background: var(--text);
+  color: var(--bg);
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.contact-submit svg {
+  flex-shrink: 0;
+}
+
+.contact-submit:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+
+  transform: translateY(-2px);
+}
+
+.contact-form-note {
+  max-width: 180px;
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: right;
+}
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+.contact-copy:focus-visible,
+.contact-social-list a:focus-visible,
+.contact-submit:focus-visible,
+.contact-email:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .contact-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 42px;
+  }
+
+  .contact-content h2 {
+    max-width: 800px;
+  }
+
+  .contact-description {
+    max-width: 650px;
+  }
+
+  .contact-info,
+  .contact-socials {
+    margin-top: 28px;
+  }
+
+  .contact-form-wrap {
+    width: 100%;
+  }
 }
 
 /* =========================================================
@@ -158,41 +506,125 @@
 
 @media (max-width: 680px) {
   .contact-section {
-    padding: 48px 0 55px;
+    width: min(
+      calc(100% - 28px),
+      var(--max)
+    );
+
+    padding: 55px 0 75px;
   }
 
-  .contact-section h2 {
-    font-size: clamp(38px, 9vw, 56px);
+  .contact-layout {
+    gap: 35px;
   }
 
-  .contact-section > p {
-    font-size: 16px;
+  .contact-kicker {
+    margin-bottom: 23px;
+    padding: 9px 12px;
+    font-size: 11px;
   }
 
-  .contact-email {
-    font-size: clamp(18px, 5vw, 24px);
+  .contact-content h2 {
+    font-size: clamp(39px, 10vw, 56px);
   }
 
-  .contact-links {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+  .contact-description {
+    margin-top: 20px;
+
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .contact-info,
+  .contact-socials {
+    margin-top: 27px;
+  }
+
+  .contact-email-row {
     gap: 10px;
   }
 
-  .contact-links a {
-    justify-content: space-between;
+  .contact-email {
+    font-size: 15px;
+  }
+
+  .contact-social-list {
+    gap: 8px;
+  }
+
+  .contact-social-list a {
+    min-height: 40px;
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+
+  /* FORM */
+
+  .contact-form-wrap {
+    padding: 20px 17px;
+
+    box-shadow: 5px 5px 0 var(--text);
+  }
+
+  .contact-form-top {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+  }
+
+  .contact-form-top h3 {
+    font-size: 23px;
+  }
+
+  .contact-form-symbol {
+    width: 36px;
+    height: 36px;
+  }
+
+  .contact-form {
+    gap: 18px;
+  }
+
+  .contact-form-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .contact-field input {
+    min-height: 50px;
+  }
+
+  .contact-field textarea {
+    min-height: 175px;
+  }
+
+  .contact-submit {
     width: 100%;
-    font-size: 16px;
+    justify-content: space-between;
+  }
+
+  .contact-form-note {
+    max-width: none;
+    width: 100%;
+    text-align: left;
   }
 }
 
 /* =========================================================
-   ACCESSIBILITY
+   REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .copy-button,
-  .contact-links a {
+  .contact-email,
+  .contact-copy,
+  .contact-social-list a,
+  .contact-field input,
+  .contact-field textarea,
+  .contact-submit {
     transition: none;
+  }
+
+  .contact-social-list a:hover,
+  .contact-submit:hover {
+    transform: none;
   }
 }

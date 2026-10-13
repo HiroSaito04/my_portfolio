@@ -4,6 +4,8 @@
 
 @import "./base.css";
 @import "./navbar.css";
+@import "./mobile-nav.css";
+@import "./visitors.css";
 @import "./hero.css";
 @import "./projects.css";
 @import "./sections.css";
@@ -12,6 +14,7 @@
 @import "./github.css";
 @import "./services.css";
 @import "./contact.css";
+@import "./comments.css";
 @import "./footer.css";
 @import "./responsive.css";
 

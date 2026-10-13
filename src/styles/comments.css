@@ -1,0 +1,672 @@
+
+/* =========================================================
+   COMMENTS SECTION
+========================================================= */
+
+.comments-section {
+  margin-top: clamp(65px, 8vw, 110px);
+  padding-top: clamp(40px, 5vw, 65px);
+
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.comments-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 35px;
+
+  margin-bottom: 30px;
+}
+
+.comments-eyebrow {
+  display: block;
+  margin-bottom: 10px;
+
+  color: var(--accent);
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+}
+
+.comments-heading h3 {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 11px;
+
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.05em;
+}
+
+.comments-heading h3 span {
+  color: var(--accent);
+
+  font-family: "DM Mono", monospace;
+  font-size: 0.55em;
+  letter-spacing: -0.03em;
+}
+
+.comments-heading > p {
+  max-width: 390px;
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.comments-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.85fr)
+    minmax(0, 1.15fr);
+
+  align-items: start;
+  gap: 18px;
+}
+
+/* =========================================================
+   FORM PANEL
+========================================================= */
+
+.comments-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  min-width: 0;
+  padding: clamp(20px, 2.5vw, 30px);
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--panel);
+}
+
+.comments-form-heading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 4px;
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.comments-form-heading svg {
+  color: var(--accent);
+}
+
+.comments-form-heading h4 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* =========================================================
+   INPUT FIELDS
+========================================================= */
+
+.comments-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  min-width: 0;
+}
+
+.comments-field > label:not(.comments-upload) {
+  color: var(--text);
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.comments-field input:not([type="file"]),
+.comments-field textarea {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 14px 15px;
+
+  border: 1px solid var(--line);
+  border-radius: 6px;
+
+  outline: none;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.comments-field input:not([type="file"]) {
+  min-height: 50px;
+}
+
+.comments-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.comments-field input::placeholder,
+.comments-field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.comments-field input:not([type="file"]):focus,
+.comments-field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.comments-character-count {
+  align-self: flex-end;
+
+  color: var(--muted);
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+}
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+.comments-file-input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.comments-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 52px;
+  padding: 12px;
+
+  border: 1px dashed var(--line);
+  border-radius: 7px;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.comments-upload svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.comments-upload:hover {
+  border-color: var(--accent);
+  background: var(--panel-2);
+}
+
+.comments-file-input:focus-visible + .comments-upload {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.comments-file-note {
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   SELECTED PHOTO
+========================================================= */
+
+.comments-selected-photo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 0;
+  padding: 9px;
+
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.comments-selected-photo img {
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 8px;
+
+  object-fit: cover;
+}
+
+.comments-selected-photo > span {
+  flex: 1;
+  min-width: 0;
+
+  color: var(--text);
+
+  font-size: 12px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comments-selected-photo button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 31px;
+  height: 31px;
+
+  border: 1px solid var(--line);
+  border-radius: 6px;
+
+  background: var(--bg);
+  color: var(--muted);
+
+  cursor: pointer;
+}
+
+.comments-selected-photo button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.comments-status {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.comments-status--success {
+  color: var(--accent);
+}
+
+.comments-status--error {
+  color: var(--text);
+}
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.comments-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 51px;
+  padding: 13px 18px;
+
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+
+  background: var(--accent);
+  color: var(--bg);
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.comments-submit:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.comments-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.comments-submit:focus-visible,
+.comments-selected-photo button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   COMMENTS FEED
+========================================================= */
+
+.comments-feed {
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--panel);
+}
+
+.comments-feed-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  padding: 23px 25px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.comments-feed-heading h4 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.comments-feed-heading > span {
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.comments-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 220px;
+  padding: 30px 20px;
+
+  color: var(--muted);
+
+  font-size: 14px;
+  text-align: center;
+}
+
+.comments-empty svg {
+  color: var(--accent);
+}
+
+.comments-empty strong {
+  color: var(--text);
+  font-size: 16px;
+}
+
+.comments-empty p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   SAVED COMMENT LIST
+========================================================= */
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  min-width: 0;
+  padding: 22px 24px;
+}
+
+.comment-item + .comment-item {
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.comment-avatar {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+
+  width: 43px;
+  height: 43px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 50%;
+
+  background: var(--panel-2);
+  color: var(--accent);
+
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.comment-avatar img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/* =========================================================
+   COMMENT CONTENT
+========================================================= */
+
+.comment-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.comment-meta strong {
+  color: var(--text);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+.comment-meta time {
+  color: var(--muted);
+
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+}
+
+.comment-content p {
+  margin: 9px 0 0;
+
+  color: var(--muted);
+
+  font-size: 14px;
+  line-height: 1.75;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.comments-more-note {
+  margin: 0;
+  padding: 15px 24px;
+
+  border-top: 1px solid var(--line);
+
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .comments-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 680px) {
+  .comments-section {
+    margin-top: 58px;
+    padding-top: 36px;
+  }
+
+  .comments-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-bottom: 23px;
+  }
+
+  .comments-heading h3 {
+    font-size: 32px;
+  }
+
+  .comments-layout {
+    gap: 14px;
+  }
+
+  .comments-form {
+    padding: 19px 17px;
+    gap: 18px;
+  }
+
+  .comments-feed-heading {
+    padding: 19px 17px;
+  }
+
+  .comment-item {
+    padding: 18px 16px;
+    gap: 11px;
+  }
+
+  .comment-avatar {
+    width: 39px;
+    height: 39px;
+  }
+
+  .comment-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comments-submit {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .comments-field input,
+  .comments-field textarea,
+  .comments-upload,
+  .comments-submit {
+    transition: none;
+  }
+
+  .comments-submit:hover:not(:disabled) {
+    transform: none;
+  }
+}

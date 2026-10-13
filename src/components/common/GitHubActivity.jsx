@@ -182,11 +182,7 @@ export function GitHubActivity() {
           <>
             <div className="about-github-calendar-heading">
               <span>
-                {data.currentYear} activity
-              </span>
-
-              <span>
-                Through today
+                Github Activity through Today
               </span>
             </div>
 

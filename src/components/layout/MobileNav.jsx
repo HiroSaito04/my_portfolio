@@ -1,7 +1,11 @@
 
-import { useEffect, useRef } from "react";
+import {
+  useEffect,
+  useRef,
+} from "react";
 
 import {
+  ArrowUpRight,
   BriefcaseBusiness,
   Camera,
   Code2,
@@ -9,12 +13,12 @@ import {
   Monitor,
   Moon,
   Sun,
-  UserRound,
   X,
 } from "lucide-react";
 
 import { site } from "../../config/site";
 import { useTheme } from "../../context/ThemeContext";
+import { VisitorAvatars } from "../common/VisitorAvatars";
 
 /* =========================================================
    THEME OPTIONS
@@ -45,24 +49,26 @@ const themeOptions = [
 const contactLinks = [
   {
     label: site.email,
-    href: `mailto:${site.email}`,
+    href: site.email
+      ? `mailto:${site.email}`
+      : null,
     Icon: Mail,
     external: false,
   },
   {
-    label: "GitHub · HiroSaito04",
+    label: "GitHub",
     href: site.github,
     Icon: Code2,
     external: true,
   },
   {
-    label: "LinkedIn · mikearubia",
+    label: "LinkedIn",
     href: site.linkedin,
     Icon: BriefcaseBusiness,
     external: true,
   },
   {
-    label: "Instagram · _zhiroark",
+    label: "Instagram",
     href: site.instagram,
     Icon: Camera,
     external: true,
@@ -77,7 +83,9 @@ export function MobileNav({
   open,
   links,
   activeSection,
-  visitorCount = null,
+  visitorCount,
+  visitors = [],
+  visitorStatus = "connecting",
   onClose,
 }) {
   const { preference, setPreference } = useTheme();
@@ -86,7 +94,7 @@ export function MobileNav({
   const closeButtonRef = useRef(null);
 
   /* =======================================================
-     FOCUS MANAGEMENT
+     RESTORE KEYBOARD FOCUS
   ======================================================= */
 
   useEffect(() => {
@@ -97,18 +105,24 @@ export function MobileNav({
     closeButtonRef.current?.focus();
 
     return () => {
-      previousFocus?.focus?.();
+      if (
+        previousFocus instanceof HTMLElement &&
+        previousFocus.isConnected
+      ) {
+        previousFocus.focus();
+      }
     };
   }, [open]);
 
   /* =======================================================
-     KEYBOARD SUPPORT
+     ESCAPE + FOCUS TRAP
   ======================================================= */
 
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
+
       onClose();
       return;
     }
@@ -119,9 +133,15 @@ export function MobileNav({
       panelRef.current?.querySelectorAll(
         'a[href], button:not([disabled])'
       ) ?? []
+    ).filter(
+      (element) =>
+        element.getClientRects().length > 0
     );
 
-    if (!focusable.length) return;
+    if (!focusable.length) {
+      event.preventDefault();
+      return;
+    }
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -144,24 +164,7 @@ export function MobileNav({
   if (!open) return null;
 
   /* =======================================================
-     VISITORS
-  ======================================================= */
-
-  const hasVisitorCount =
-    Number.isInteger(visitorCount) &&
-    visitorCount >= 0;
-
-  const displayCount = hasVisitorCount
-    ? visitorCount
-    : "—";
-
-  const visitorLabel =
-    visitorCount === 1
-      ? "person viewing now"
-      : "people viewing now";
-
-  /* =======================================================
-     UI
+     RENDER
   ======================================================= */
 
   return (
@@ -174,7 +177,7 @@ export function MobileNav({
         aria-hidden="true"
       />
 
-      {/* SIDE PANEL */}
+      {/* DRAWER PANEL */}
 
       <aside
         ref={panelRef}
@@ -186,99 +189,135 @@ export function MobileNav({
         onKeyDown={handleKeyDown}
       >
         <div className="drawer-inner">
-          {/* =============================================
-              HEADER
-          ============================================== */}
+          {/* HEADER */}
 
           <div className="drawer-head">
             <a
-            className="brand"
-            href="/#top"
-            aria-label={`${site.shortName} home`}
-            onClick={() => setMenuOpen(false)}
-          >
-            <span className="brand-mark" aria-hidden="true">
-              MR
-            </span>
+              className="drawer-brand"
+              href="/#top"
+              aria-label={`${site.shortName} home`}
+              onClick={onClose}
+            >
+              <span
+                className="drawer-brand-mark"
+                aria-hidden="true"
+              >
+                MR
+              </span>
 
-            <span className="brand-copy">
-              <strong>{site.name}</strong>
-            </span>
-          </a>
-          
+              <span className="drawer-brand-copy">
+                <strong>
+                  {site.shortName}
+                </strong>
+
+                <small>
+                  {site.role}
+                </small>
+              </span>
+            </a>
+
             <button
               ref={closeButtonRef}
               type="button"
-              className="icon-button drawer-close"
+              className="drawer-close"
               onClick={onClose}
               aria-label="Close navigation"
             >
-              <X size={20} aria-hidden="true" />
+              <X
+                size={20}
+                aria-hidden="true"
+              />
             </button>
           </div>
 
-          {/* =============================================
-              NAVIGATION LINKS
-          ============================================== */}
+          {/* NAVIGATION */}
 
-          <nav
-            className="drawer-links"
-            aria-label="Mobile navigation links"
-          >
-            {links.map((link) => {
-              const id = link.href.replace(/^#/, "");
-              const isActive = activeSection === id;
+          <div className="drawer-nav-block">
+            <span className="drawer-section-label">
+              NAVIGATION
+            </span>
 
-              return (
-                <a
-                  key={link.href}
-                  href={`/${link.href}`}
-                  className={isActive ? "active" : ""}
-                  aria-current={
-                    isActive ? "location" : undefined
-                  }
-                  onClick={onClose}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
-          </nav>
-
-          {/* =============================================
-              VISITORS
-          ============================================== */}
-
-          <section
-            className="drawer-visitors"
-            aria-label="Site visitors"
-          >
-            <div
-              className="visitor-avatars"
-              aria-hidden="true"
+            <nav
+              className="drawer-links"
+              aria-label="Mobile navigation links"
             >
-              {[0, 1, 2].map((index) => (
-                <span
-                  key={index}
-                  className={`visitor-avatar visitor-avatar-${index}`}
-                >
-                  <UserRound size={15} />
-                </span>
-              ))}
-            </div>
+              {links.map((link, index) => {
+                const id = link.href.replace(
+                  /^\/?#/,
+                  ""
+                );
 
-            <p className="visitor-status">
-              <strong>{displayCount}</strong>
-              <span>{visitorLabel}</span>
-            </p>
-          </section>
+                const isActive =
+                  activeSection === id;
 
-          {/* =============================================
-              THEME AND CONTACT
-          ============================================== */}
+                const href = link.href.startsWith("/")
+                  ? link.href
+                  : `/${link.href}`;
 
-          <section className="drawer-bottom">
+                return (
+                  <a
+                    key={link.href}
+                    href={href}
+                    className={
+                      isActive ? "active" : ""
+                    }
+                    aria-current={
+                      isActive
+                        ? "location"
+                        : undefined
+                    }
+                    onClick={onClose}
+                  >
+                    <span className="drawer-link-index">
+                      {String(index + 1).padStart(
+                        2,
+                        "0"
+                      )}
+                    </span>
+
+                    <span className="drawer-link-label">
+                      {link.label}
+                    </span>
+
+                    <ArrowUpRight
+                      size={18}
+                      aria-hidden="true"
+                    />
+                  </a>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* REAL-TIME VISITORS */}
+
+          <div className="drawer-visitors">
+            <span className="drawer-section-label">
+              LIVE VISITORS
+            </span>
+
+            <VisitorAvatars
+              visitorCount={visitorCount}
+              visitors={visitors}
+              status={visitorStatus}
+              variant="drawer"
+            />
+          </div>
+
+          {/* BOTTOM */}
+
+          <div className="drawer-bottom">
             {/* THEME */}
+
+            <div className="drawer-theme-header">
+              <span className="drawer-section-label">
+                APPEARANCE
+              </span>
+
+              <span className="drawer-theme-current">
+                {preference}
+              </span>
+            </div>
 
             <div
               className="drawer-theme-switch"
@@ -290,16 +329,28 @@ export function MobileNav({
                   <button
                     key={value}
                     type="button"
-                    className="drawer-theme-option"
-                    onClick={() => setPreference(value)}
+                    className={`drawer-theme-option ${
+                      preference === value
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      setPreference(value)
+                    }
                     aria-label={label}
-                    aria-pressed={preference === value}
+                    aria-pressed={
+                      preference === value
+                    }
                     title={label}
                   >
                     <Icon
-                      size={17}
+                      size={18}
                       aria-hidden="true"
                     />
+
+                    <span>
+                      {value}
+                    </span>
                   </button>
                 )
               )}
@@ -307,38 +358,62 @@ export function MobileNav({
 
             {/* CONTACT */}
 
-            <p className="drawer-contact-intro">
-              For work, collaborations & everything
-              else, reach me at
-            </p>
+            {contactLinks.length > 0 && (
+              <div className="drawer-contact">
+                <span className="drawer-section-label">
+                  GET IN TOUCH
+                </span>
 
-            <div className="drawer-contact-links">
-              {contactLinks.map(
-                ({ label, href, Icon, external }) => (
-                  <a
-                    key={href}
-                    href={href}
-                    target={
-                      external ? "_blank" : undefined
-                    }
-                    rel={
-                      external
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    onClick={onClose}
-                  >
-                    <Icon
-                      size={18}
-                      aria-hidden="true"
-                    />
+                <p className="drawer-contact-intro">
+                  Have a project or collaboration
+                  in mind? Let's connect.
+                </p>
 
-                    <span>{label}</span>
-                  </a>
-                )
-              )}
-            </div>
-          </section>
+                <div className="drawer-contact-links">
+                  {contactLinks.map(
+                    ({
+                      label,
+                      href,
+                      Icon,
+                      external,
+                    }) => (
+                      <a
+                        key={href}
+                        href={href}
+                        target={
+                          external
+                            ? "_blank"
+                            : undefined
+                        }
+                        rel={
+                          external
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        onClick={onClose}
+                      >
+                        <Icon
+                          size={17}
+                          aria-hidden="true"
+                        />
+
+                        <span>
+                          {label}
+                        </span>
+
+                        {external && (
+                          <ArrowUpRight
+                            size={14}
+                            aria-hidden="true"
+                          />
+                        )}
+                      </a>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </aside>
     </div>

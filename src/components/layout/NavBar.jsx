@@ -1,17 +1,41 @@
 
-import { useEffect, useState } from "react";
-import { Menu, Monitor, Moon, Sun } from "lucide-react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import { navigation, site } from "../../config/site";
+import {
+  Menu,
+  Monitor,
+  Moon,
+  Sun,
+} from "lucide-react";
+
+import {
+  navigation,
+  site,
+} from "../../config/site";
+
 import { useTheme } from "../../context/ThemeContext";
 import { useActiveSection } from "../../hooks/useActiveSection";
+import { useLiveVisitors } from "../../hooks/useLiveVisitors";
+
+import { VisitorAvatars } from "../common/VisitorAvatars";
 import { MobileNav } from "./MobileNav";
 
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
 const sectionIds = navigation.map((link) =>
-  link.href.replace(/^#/, "")
+  link.href.replace(/^\/?#/, "")
 );
 
-const themeModes = ["system", "light", "dark"];
+const themeModes = [
+  "system",
+  "light",
+  "dark",
+];
 
 const themeIcons = {
   system: Monitor,
@@ -19,34 +43,77 @@ const themeIcons = {
   dark: Moon,
 };
 
-export default function NavBar({ visitorCount = null }) {
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+export default function NavBar() {
   const { preference, setPreference } = useTheme();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
   const activeSection = useActiveSection(sectionIds);
 
-  const ThemeIcon = themeIcons[preference] ?? Monitor;
+  /* =======================================================
+     SHARED LIVE VISITOR DATA
+  ======================================================= */
+
+  const {
+    visitorCount,
+    visitors,
+    status: visitorStatus,
+  } = useLiveVisitors();
+
+  /* =======================================================
+     THEME SWITCHING
+  ======================================================= */
+
+  const ThemeIcon =
+    themeIcons[preference] ?? Monitor;
 
   const cycleTheme = () => {
     const index = themeModes.indexOf(preference);
-    const nextIndex = (index + 1) % themeModes.length;
 
-    setPreference(themeModes[nextIndex]);
+    setPreference(
+      themeModes[
+        (index + 1) % themeModes.length
+      ]
+    );
   };
 
-  // Lock body scrolling while the mobile drawer is open.
+  /* =======================================================
+     DRAWER CONTROLS
+  ======================================================= */
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  /* =======================================================
+     BODY SCROLL LOCK
+  ======================================================= */
+
   useEffect(() => {
-    document.body.classList.toggle("menu-open", menuOpen);
+    document.body.classList.toggle(
+      "menu-open",
+      menuOpen
+    );
 
     return () => {
-      document.body.classList.remove("menu-open");
+      document.body.classList.remove(
+        "menu-open"
+      );
     };
   }, [menuOpen]);
 
-  // Close the drawer when switching to desktop.
+  /* =======================================================
+     DESKTOP BREAKPOINT
+  ======================================================= */
+
   useEffect(() => {
-    const media = window.matchMedia("(min-width: 981px)");
+    const media = window.matchMedia(
+      "(min-width: 981px)"
+    );
 
     const handleChange = () => {
       if (media.matches) {
@@ -54,12 +121,24 @@ export default function NavBar({ visitorCount = null }) {
       }
     };
 
-    media.addEventListener("change", handleChange);
+    handleChange();
+
+    media.addEventListener(
+      "change",
+      handleChange
+    );
 
     return () => {
-      media.removeEventListener("change", handleChange);
+      media.removeEventListener(
+        "change",
+        handleChange
+      );
     };
   }, []);
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
 
   return (
     <>
@@ -74,15 +153,23 @@ export default function NavBar({ visitorCount = null }) {
             className="brand"
             href="/#top"
             aria-label={`${site.shortName} home`}
-            onClick={() => setMenuOpen(false)}
+            onClick={closeMenu}
           >
-            <span className="brand-mark" aria-hidden="true">
+            <span
+              className="brand-mark"
+              aria-hidden="true"
+            >
               MR
             </span>
 
             <span className="brand-copy">
-              <strong>{site.shortName}</strong>
-              <small>{site.role}</small>
+              <strong>
+                {site.shortName}
+              </strong>
+
+              <small>
+                {site.role}
+              </small>
             </span>
           </a>
 
@@ -90,16 +177,29 @@ export default function NavBar({ visitorCount = null }) {
 
           <div className="desktop-nav">
             {navigation.map((link) => {
-              const id = link.href.replace(/^#/, "");
-              const isActive = activeSection === id;
+              const id = link.href.replace(
+                /^\/?#/,
+                ""
+              );
+
+              const isActive =
+                activeSection === id;
+
+              const href = link.href.startsWith("/")
+                ? link.href
+                : `/${link.href}`;
 
               return (
                 <a
                   key={link.href}
-                  href={`/${link.href}`}
-                  className={isActive ? "active" : ""}
+                  href={href}
+                  className={
+                    isActive ? "active" : ""
+                  }
                   aria-current={
-                    isActive ? "location" : undefined
+                    isActive
+                      ? "location"
+                      : undefined
                   }
                 >
                   {link.label}
@@ -111,6 +211,17 @@ export default function NavBar({ visitorCount = null }) {
           {/* ACTIONS */}
 
           <div className="nav-actions">
+            {/* LIVE VISITORS */}
+
+            <VisitorAvatars
+              visitorCount={visitorCount}
+              visitors={visitors}
+              status={visitorStatus}
+              variant="navbar"
+            />
+
+            {/* THEME */}
+
             <button
               type="button"
               className="icon-button theme-toggle"
@@ -124,6 +235,8 @@ export default function NavBar({ visitorCount = null }) {
                 aria-hidden="true"
               />
             </button>
+
+            {/* MOBILE MENU */}
 
             <button
               type="button"
@@ -143,12 +256,16 @@ export default function NavBar({ visitorCount = null }) {
         </nav>
       </header>
 
+      {/* MOBILE DRAWER */}
+
       <MobileNav
         open={menuOpen}
         links={navigation}
         activeSection={activeSection}
         visitorCount={visitorCount}
-        onClose={() => setMenuOpen(false)}
+        visitors={visitors}
+        visitorStatus={visitorStatus}
+        onClose={closeMenu}
       />
     </>
   );

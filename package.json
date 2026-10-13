@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.3",
     "lucide-react": "latest",
     "react": "latest",
     "react-activity-calendar": "^3.2.1",

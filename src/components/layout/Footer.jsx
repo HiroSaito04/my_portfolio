@@ -1,29 +1,21 @@
 
-import { ArrowUpRight, ArrowUp } from "lucide-react";
-
+import { ArrowUp } from "lucide-react";
 import { site } from "../../config/site";
 
-/* =========================================================
-   FOOTER
-========================================================= */
-
-const Footer = () => {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="site-footer">
       <div className="footer-container">
-
-        {/* ===============================================
-            MAIN FOOTER
-        ================================================ */}
+        {/* MAIN FOOTER */}
 
         <div className="footer-main">
-
-          {/* BRAND */}
-
           <div className="footer-brand">
-            <div className="footer-logo" aria-hidden="true">
+            <div
+              className="footer-logo"
+              aria-hidden="true"
+            >
               MR
             </div>
 
@@ -33,56 +25,33 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* DESCRIPTION */}
-
-          <p className="footer-description">
-            Designed to turn technical capability
-            into business trust.
-          </p>
-
-          {/* BACK TO TOP */}
-
           <a
             href="/#top"
             className="footer-back-top"
             aria-label="Back to top"
           >
             <span>Back to top</span>
-            <ArrowUp size={16} aria-hidden="true" />
-          </a>
-
-        </div>
-
-        {/* ===============================================
-            FOOTER BOTTOM
-        ================================================ */}
-
-        <div className="footer-bottom">
-
-          {/* COPYRIGHT */}
-
-          <p className="footer-copyright">
-            © {currentYear} {site.name}.
-            All rights reserved.
-          </p>
-
-          {/* EMAIL */}
-
-          <a
-            href={`mailto:${site.email}`}
-            className="footer-email"
-          >
-            Get in touch
-            <ArrowUpRight
-              size={15}
+            <ArrowUp
+              size={16}
+              strokeWidth={1.8}
               aria-hidden="true"
             />
           </a>
+        </div>
 
+        {/* COPYRIGHT */}
+
+        <div className="footer-bottom">
+          <p className="footer-copyright">
+            © {currentYear} {site.name}.
+            {" "}All rights reserved.
+          </p>
+
+          <span className="footer-credit">
+            Designed &amp; developed with care.
+          </span>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
