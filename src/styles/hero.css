@@ -1,6 +1,6 @@
 
 /* =========================================================
-   HERO LAYOUT
+   HERO — LAYOUT
 ========================================================= */
 
 .hero {
@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns:
     minmax(0, 1.3fr)
-    minmax(310px, 0.85fr);
+    minmax(330px, 0.85fr);
 
   grid-template-areas:
     "copy profile"
@@ -17,7 +17,8 @@
 
   align-items: start;
 
-  gap: 26px clamp(30px, 4.5vw, 70px);
+  column-gap: clamp(28px, 4vw, 65px);
+  row-gap: 30px;
 
   padding: clamp(48px, 6vw, 85px) 0 78px;
 }
@@ -34,22 +35,48 @@
 }
 
 /* =========================================================
-   INTRODUCTION
+   INTRODUCTION BADGE
 ========================================================= */
 
 .hero-intro-group {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 11px;
 
-  margin-bottom: 15px;
+  max-width: 100%;
+  margin-bottom: 23px;
+  padding: 10px 17px;
+
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  background: var(--panel);
+
+  box-shadow: var(--shadow-soft);
+}
+
+.hero-intro-dot {
+  display: block;
+  flex-shrink: 0;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+  background: var(--accent);
+
+  box-shadow:
+    0 0 0 4px
+    color-mix(in srgb, var(--accent) 13%, transparent);
+
+  animation: hero-dot-pulse 2.6s ease-in-out infinite;
 }
 
 .hero-intro-line {
-  width: 26px;
-  height: 2px;
-
   flex-shrink: 0;
+
+  width: 22px;
+  height: 2px;
 
   border-radius: 99px;
   background: var(--accent);
@@ -58,22 +85,24 @@
 .hero-intro {
   margin: 0;
 
-  color: var(--muted);
+  color: var(--text);
 
   font-family: "DM Mono", monospace;
-  font-size: clamp(13px, 1.2vw, 16px);
+  font-size: clamp(12px, 1.1vw, 14px);
   font-weight: 500;
   line-height: 1.5;
 }
 
 /* =========================================================
-   PIXEL NAME
+   ANIMATED NAME
 ========================================================= */
 
 .hero .hero-name {
+  display: flex;
+  align-items: baseline;
+
   width: fit-content;
   max-width: 100%;
-
   margin: 0;
 
   color: var(--accent);
@@ -83,12 +112,17 @@
     "DM Mono",
     monospace;
 
-  font-size: clamp(70px, 8vw, 115px);
+  font-size: clamp(74px, 8.7vw, 122px);
   font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.06em;
-
+  line-height: 0.95;
+  letter-spacing: -0.065em;
   white-space: nowrap;
+}
+
+.hero-name-letter {
+  display: inline-block;
+
+  transform-origin: center bottom;
 }
 
 .hero-name-period {
@@ -97,17 +131,17 @@
 }
 
 /* =========================================================
-   HEADLINE
+   HEADLINE + TYPEWRITER
 ========================================================= */
 
 .hero-headline {
   max-width: 650px;
-  margin: 26px 0 0;
+  margin: 30px 0 0;
 
   color: var(--text);
 
   font-size: clamp(27px, 2.85vw, 41px);
-  font-weight: 600;
+  font-weight: 650;
   line-height: 1.23;
   letter-spacing: -0.05em;
 
@@ -116,33 +150,27 @@
 
 .hero-headline-static {
   display: block;
-  color: var(--text);
 }
-
-/* =========================================================
-   TYPEWRITER
-========================================================= */
 
 .hero-typed-line {
   display: block;
 
-  min-height: 1.25em;
-  margin-top: 5px;
+  min-height: 1.3em;
+  margin-top: 8px;
 
   color: var(--accent);
+  font-weight: 700;
 }
 
 .hero-typed-text {
-  color: var(--accent);
   white-space: pre-wrap;
 }
 
 .hero-typing-cursor {
   display: inline-block;
 
-  width: 3px;
-  height: 0.88em;
-
+  width: 4px;
+  height: 0.85em;
   margin-left: 5px;
 
   border-radius: 2px;
@@ -151,28 +179,26 @@
   vertical-align: -0.12em;
 
   animation:
-    hero-cursor-blink
-    0.8s steps(1) infinite;
+    hero-cursor-blink 0.8s steps(1) infinite;
 }
 
 .hero-typed-line.is-complete
 .hero-typing-cursor {
   animation:
-    hero-cursor-finish
-    0.7s ease 1.1s forwards;
+    hero-cursor-hide 0.5s ease 1s forwards;
 }
 
 /* =========================================================
-   DESCRIPTION
+   LEAD TEXT
 ========================================================= */
 
 .hero-lead {
-  max-width: 590px;
-  margin: 22px 0 0;
+  max-width: 570px;
+  margin: 24px 0 0;
 
   color: var(--muted);
 
-  font-size: clamp(15px, 1.25vw, 17px);
+  font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.8;
 }
 
@@ -196,7 +222,7 @@
   gap: 11px;
 
   min-height: 55px;
-  padding: 11px 19px;
+  padding: 11px 18px;
 
   border-radius: 12px;
 
@@ -207,17 +233,17 @@
   text-decoration: none;
 
   transition:
-    background 0.22s ease,
+    background-color 0.22s ease,
     border-color 0.22s ease,
     color 0.22s ease,
     transform 0.22s ease,
     box-shadow 0.22s ease;
 }
 
-/* Primary button */
+/* Work button */
 
 .hero-actions .hero-work-button {
-  gap: 17px;
+  gap: 18px;
 
   border: 1px solid var(--accent);
 
@@ -236,12 +262,8 @@
   transform: translateY(-3px);
 
   box-shadow:
-    0 8px 24px
-    color-mix(
-      in srgb,
-      var(--accent) 20%,
-      transparent
-    );
+    0 8px 25px
+    color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .hero-work-button:hover svg {
@@ -275,7 +297,7 @@
   text-align: left;
 }
 
-.hero-actions .hero-email-button > svg {
+.hero-email-button > svg {
   flex-shrink: 0;
   color: var(--accent);
 }
@@ -284,7 +306,6 @@
   border-color: var(--accent);
 
   background: var(--panel-2);
-
   transform: translateY(-2px);
 }
 
@@ -313,8 +334,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Copy email */
-
 .hero-copy-email {
   display: grid;
   place-items: center;
@@ -333,10 +352,10 @@
   cursor: pointer;
 
   transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease;
 }
 
 .hero-copy-email:hover {
@@ -358,13 +377,12 @@
   margin: 8px 0 0;
 
   color: var(--muted);
-
   font-size: 12px;
   line-height: 1.5;
 }
 
 /* =========================================================
-   PROFILE CARD — OUTER SHELL
+   PROFILE — OUTER CARD
 ========================================================= */
 
 .hero-profile {
@@ -382,40 +400,44 @@
   background: var(--panel);
   color: var(--text);
 
-  box-shadow:
-    0 16px 45px rgba(0, 0, 0, 0.07);
+  box-shadow: var(--shadow);
 
-  perspective: 1500px;
-  -webkit-perspective: 1500px;
+  perspective: 1600px;
+  -webkit-perspective: 1600px;
 
-  cursor: pointer;
+  cursor: grab;
+
+  touch-action: pan-y;
 
   user-select: none;
+  -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
 
   transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.hero-profile:hover,
-.hero-profile:focus-visible {
+.hero-profile:hover {
   border-color:
-    color-mix(
-      in srgb,
-      var(--accent) 55%,
-      var(--line)
-    );
+    color-mix(in srgb, var(--accent) 65%, var(--line));
 
   box-shadow:
-    0 18px 52px rgba(0, 0, 0, 0.11);
+    0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+.hero-profile.is-dragging {
+  cursor: grabbing;
+  border-color: var(--accent);
+}
+
+.hero-profile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
 }
 
 /* =========================================================
-   SLOW 3D FLIP
-
-   1.6-second rotation.
-   No button needed.
+   3D CYLINDER ROTATION
 ========================================================= */
 
 .hero-profile-inner {
@@ -428,75 +450,83 @@
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
 
-  transform: rotateY(0deg);
+  transform-origin: center center;
 
   transition:
     transform 1.6s
-    cubic-bezier(
-      0.45,
-      0.05,
-      0.2,
-      1
-    );
+    cubic-bezier(0.25, 0.7, 0.18, 1);
 
   will-change: transform;
 }
 
-.hero-profile.is-flipped
-.hero-profile-inner {
-  transform: rotateY(180deg);
+/* Direct rotation while dragging */
+
+.hero-profile.is-dragging .hero-profile-inner {
+  transition: none !important;
 }
 
 /* =========================================================
-   BOTH SIDES
-
-   Grid stacking keeps the card height stable.
+   FRONT AND BACK FACES
 ========================================================= */
 
 .hero-profile-face {
+  position: relative;
   grid-area: 1 / 1;
 
   display: flex;
   flex-direction: column;
 
   min-width: 0;
-  min-height: 100%;
+  min-height: 620px;
 
   overflow: hidden;
 
   border-radius: 19px;
+
   background: var(--panel);
 
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-/* Picture side */
-
 .hero-profile-front {
   transform: rotateY(0deg);
 }
-
-/* Specialties side */
 
 .hero-profile-back {
   transform: rotateY(180deg);
 }
 
-/* Only the visible face receives pointer events */
-
-.hero-profile.is-flipped
-.hero-profile-front {
+.hero-profile.is-flipped .hero-profile-front,
+.hero-profile:not(.is-flipped) .hero-profile-back {
   pointer-events: none;
 }
 
-.hero-profile:not(.is-flipped)
-.hero-profile-back {
+/* Subtle curved-edge illusion */
+
+.hero-profile-face::after {
+  position: absolute;
+  inset: 0;
+
+  z-index: 4;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.055),
+      transparent 13%,
+      transparent 87%,
+      rgba(0, 0, 0, 0.055)
+    );
+
   pointer-events: none;
+  content: "";
 }
 
 /* =========================================================
-   CARD TOP
+   CARD HEADER
 ========================================================= */
 
 .hero-profile-top {
@@ -504,11 +534,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
 
-  min-height: 52px;
+  min-height: 55px;
   padding: 15px 19px;
 
   border-bottom: 1px solid var(--line);
+
+  background: var(--panel);
 }
 
 .hero-profile-eyebrow,
@@ -517,31 +550,24 @@
 
   font-family: "DM Mono", monospace;
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.065em;
+  font-weight: 600;
   line-height: 1.4;
+  letter-spacing: 0.08em;
 }
 
 .hero-card-back-tag {
   color: var(--accent);
 }
 
-/* =========================================================
-   AVAILABILITY
-========================================================= */
-
 .hero-profile-status {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
 
   color: var(--text);
 
   font-family: "DM Mono", monospace;
   font-size: 10px;
-  font-weight: 500;
-
   white-space: nowrap;
 }
 
@@ -553,70 +579,133 @@
   background: var(--accent);
 
   box-shadow:
-    0 0 0 3px
-    color-mix(
-      in srgb,
-      var(--accent) 13%,
-      transparent
-    );
+    0 0 0 4px
+    color-mix(in srgb, var(--accent) 12%, transparent);
 
-  animation:
-    hero-status-pulse
-    2.7s ease-in-out infinite;
+  animation: hero-dot-pulse 2.8s ease-in-out infinite;
 }
 
 /* =========================================================
-   FRONT — PHOTO AREA
+   PHOTO STAGE — FULL WIDTH
+
+   No separate tilted frame.
+   Portrait is centered and anchored at bottom.
 ========================================================= */
 
 .hero-photo-area {
   position: relative;
 
   display: grid;
-  place-items: center;
+  place-items: end center;
 
-  min-height: 230px;
-  padding: 28px 20px;
+  flex-shrink: 0;
+
+  width: 100%;
+  height: clamp(270px, 27vw, 330px);
 
   overflow: hidden;
+  isolation: isolate;
 
   background:
     radial-gradient(
-      circle at 50% 45%,
-      var(--panel-2),
-      var(--panel) 75%
-    );
+      ellipse at 50% 75%,
+      color-mix(in srgb, var(--accent) 14%, transparent),
+      transparent 66%
+    ),
+    var(--panel-2);
+
+  border-bottom: 1px solid var(--line);
 }
 
-/* Pixel-like grid */
+/* Grid sits behind image */
 
-.hero-photo-area::before {
+.hero-photo-grid {
   position: absolute;
   inset: 0;
+  z-index: 0;
 
   background-image:
     linear-gradient(
-      var(--line) 1px,
+      var(--grid-line, var(--line)) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      var(--line) 1px,
+      var(--grid-line, var(--line)) 1px,
       transparent 1px
     );
 
-  background-size: 25px 25px;
-  opacity: 0.25;
+  background-size: 26px 26px;
+  opacity: 0.62;
 
   pointer-events: none;
-  content: "";
 }
+
+/* Decorative rings */
+
+.hero-photo-orbit {
+  position: absolute;
+  bottom: -68px;
+  left: 50%;
+  z-index: 0;
+
+  width: 340px;
+  height: 340px;
+
+  border: 1px solid
+    color-mix(in srgb, var(--accent) 34%, transparent);
+
+  border-radius: 50%;
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+}
+
+.hero-photo-orbit-inner {
+  bottom: -20px;
+
+  width: 225px;
+  height: 225px;
+
+  border-style: dashed;
+  opacity: 0.4;
+}
+
+/* Image fills the stage without cropping */
+
+.hero-photo {
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  z-index: 2;
+
+  display: block;
+
+  width: min(92%, 380px);
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center bottom;
+
+  transform: translateX(-50%);
+
+  max-width: none;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+
+  filter:
+    drop-shadow(0 9px 17px rgba(0, 0, 0, 0.13));
+}
+
+/* Small technical labels */
 
 .hero-photo-decoration {
   position: absolute;
-  top: 16px;
-  right: 17px;
-  left: 17px;
+  inset: 17px 18px auto;
+  z-index: 3;
 
   display: flex;
   align-items: center;
@@ -626,50 +715,33 @@
 
   font-family: "DM Mono", monospace;
   font-size: 10px;
-  letter-spacing: 0.07em;
+  font-weight: 600;
+  letter-spacing: 0.09em;
 
   pointer-events: none;
 }
 
-.hero-photo-frame {
-  position: relative;
-  z-index: 1;
+/* Strong base line under the portrait */
 
-  width: min(100%, 168px);
-  aspect-ratio: 5 / 6;
-
-  overflow: hidden;
-
-  border: 1px solid var(--line);
-  border-radius: 14px;
-
-  background: var(--panel-2);
-
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.1);
-
-  transform: rotate(-3deg);
-
-  transition:
-    transform 0.45s ease,
-    box-shadow 0.45s ease;
-}
-
-.hero-profile:not(.is-flipped):hover
-.hero-photo-frame {
-  transform:
-    rotate(0deg)
-    translateY(-4px);
-}
-
-.hero-photo {
-  display: block;
+.hero-photo-bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
 
   width: 100%;
-  height: 100%;
+  height: 3px;
 
-  object-fit: cover;
-  object-position: center 25%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--accent),
+      transparent
+    );
+
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 /* =========================================================
@@ -677,34 +749,39 @@
 ========================================================= */
 
 .hero-profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   flex: 1;
 
-  padding: 23px 24px 25px;
-
-  border-top: 1px solid var(--line);
+  min-width: 0;
+  padding: 22px 23px 21px;
 }
 
 .hero-profile-role {
+  display: block;
   margin: 0;
 
   color: var(--accent);
 
   font-family: "DM Mono", monospace;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.5;
-  letter-spacing: 0.075em;
+  letter-spacing: 0.09em;
 }
 
 .hero-profile-info h3 {
-  margin: 9px 0 11px;
+  margin: 8px 0 9px;
 
   color: var(--text);
 
-  font-size: clamp(22px, 2vw, 29px);
-  font-weight: 600;
+  font-size: clamp(23px, 2vw, 29px);
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.045em;
+
+  overflow-wrap: anywhere;
 }
 
 .hero-profile-description {
@@ -713,7 +790,7 @@
   color: var(--muted);
 
   font-size: 13px;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .hero-about-link {
@@ -721,8 +798,7 @@
   align-items: center;
   gap: 8px;
 
-  width: fit-content;
-  margin-top: 18px;
+  margin-top: 16px;
 
   color: var(--text);
 
@@ -731,8 +807,8 @@
   text-decoration: none;
 
   transition:
-    gap 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    gap 0.2s ease;
 }
 
 .hero-about-link svg {
@@ -745,17 +821,17 @@
 }
 
 /* =========================================================
-   BACK — INTRO
+   BACK — HEADING
 ========================================================= */
 
 .hero-back-content {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 20px;
+  gap: 21px;
 
+  padding: 27px 21px;
   min-width: 0;
-  padding: 24px 20px;
 }
 
 .hero-back-heading h3 {
@@ -763,9 +839,9 @@
 
   color: var(--text);
 
-  font-size: clamp(23px, 2.4vw, 31px);
-  font-weight: 600;
-  line-height: 1.15;
+  font-size: clamp(23px, 2.2vw, 30px);
+  font-weight: 700;
+  line-height: 1.17;
   letter-spacing: -0.05em;
 }
 
@@ -783,33 +859,33 @@
 }
 
 /* =========================================================
-   BACK — FOCUS AREAS
+   BACK — SPECIALTIES
 ========================================================= */
 
 .hero-back-services {
   display: grid;
-  gap: 9px;
+  gap: 10px;
 }
 
 .hero-back-service {
   display: grid;
   grid-template-columns:
-    36px minmax(0, 1fr) auto;
+    38px minmax(0, 1fr) auto;
 
   align-items: start;
   gap: 11px;
 
   min-width: 0;
-  padding: 14px 12px;
+  padding: 13px;
 
   border: 1px solid var(--line);
-  border-radius: 11px;
+  border-radius: 12px;
 
   background: var(--bg);
 
   transition:
     border-color 0.2s ease,
-    background 0.2s ease,
+    background-color 0.2s ease,
     transform 0.2s ease;
 }
 
@@ -824,14 +900,18 @@
   display: grid;
   place-items: center;
 
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
 
   border: 1px solid var(--line);
   border-radius: 9px;
 
-  background: var(--panel);
+  background: var(--panel-2);
   color: var(--accent);
+}
+
+.hero-back-service-copy {
+  min-width: 0;
 }
 
 .hero-back-service strong {
@@ -840,7 +920,7 @@
   color: var(--text);
 
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 650;
   line-height: 1.4;
 }
 
@@ -850,7 +930,7 @@
   color: var(--muted);
 
   font-size: 11px;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .hero-back-service-number {
@@ -861,7 +941,7 @@
 }
 
 /* =========================================================
-   CARD FOOTER — NO BUTTON
+   SHARED CARD FOOTER
 ========================================================= */
 
 .hero-card-footer {
@@ -869,12 +949,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
 
   margin-top: auto;
-  padding: 14px 18px;
+  padding: 14px 19px;
 
   border-top: 1px solid var(--line);
-
   background: var(--panel);
 }
 
@@ -884,35 +964,26 @@
   font-family: "DM Mono", monospace;
   font-size: 10px;
   font-weight: 600;
+  line-height: 1.4;
   letter-spacing: 0.055em;
 }
 
-.hero-card-flip-symbol {
+.hero-cylinder-icon {
+  flex-shrink: 0;
+
   color: var(--accent);
 
-  font-family: "DM Mono", monospace;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1;
+  transition: transform 0.35s ease;
 }
 
-/* Small visual cue while hovering */
-
-.hero-profile:hover
-.hero-card-flip-symbol {
-  animation:
-    hero-flip-cue
-    1.5s ease-in-out infinite;
+.hero-profile:hover .hero-cylinder-icon {
+  transform: rotate(35deg);
 }
-
-/* =========================================================
-   BACK — CONTACT LINK
-========================================================= */
 
 .hero-back-contact {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 
   color: var(--text);
 
@@ -931,15 +1002,25 @@
   color: var(--accent);
 }
 
+/* Links inside card remain clickable */
+
+.hero-profile a {
+  position: relative;
+  z-index: 5;
+
+  cursor: pointer;
+
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
 /* =========================================================
    SOCIAL LINKS
 ========================================================= */
 
 .hero-social {
   grid-area: social;
-
   min-width: 0;
-  align-self: start;
 }
 
 .hero-social-heading {
@@ -947,7 +1028,7 @@
   align-items: center;
   gap: 15px;
 
-  margin-bottom: 13px;
+  margin-bottom: 14px;
 }
 
 .hero-social-label {
@@ -957,9 +1038,9 @@
 
   font-family: "DM Mono", monospace;
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.075em;
   white-space: nowrap;
 }
 
@@ -997,7 +1078,7 @@
   text-decoration: none;
 
   transition:
-    background 0.2s ease,
+    background-color 0.2s ease,
     border-color 0.2s ease,
     transform 0.2s ease;
 }
@@ -1036,83 +1117,70 @@
 
 .hero-social .social-row .social-link:hover {
   border-color: var(--accent);
-  background: var(--panel-2);
 
+  background: var(--panel-2);
   transform: translateY(-3px);
 }
 
 /* =========================================================
-   KEYBOARD FOCUS
-========================================================= */
-
-.hero a:focus-visible,
-.hero button:focus-visible,
-.hero-profile:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-}
-
-/* =========================================================
-   HERO ENTRANCE ANIMATIONS
+   INTRO ENTRANCE ANIMATIONS
 ========================================================= */
 
 .hero-ready .hero-intro-group {
   animation:
-    hero-reveal-up
-    0.5s 0.05s ease-out both;
+    hero-fade-up 0.55s 0.08s ease-out both;
 }
 
-.hero-ready .hero-name {
+.hero-ready .hero-name-letter {
   animation:
-    hero-name-reveal
-    0.75s 0.1s
-    cubic-bezier(0.16, 1, 0.3, 1) both;
+    hero-letter-enter
+    0.72s
+    var(--letter-delay)
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
 }
 
 .hero-ready .hero-name-period {
   animation:
-    hero-period-pop
-    0.5s 0.5s both;
+    hero-period-enter
+    0.5s 0.6s ease-out both;
 }
 
 .hero-ready .hero-headline {
   animation:
-    hero-reveal-up
-    0.65s 0.26s ease-out both;
+    hero-fade-up 0.65s 0.65s ease-out both;
 }
 
 .hero-ready .hero-lead {
   animation:
-    hero-reveal-up
-    0.65s 0.42s ease-out both;
+    hero-fade-up 0.65s 0.8s ease-out both;
 }
 
 .hero-ready .hero-actions {
   animation:
-    hero-reveal-up
-    0.65s 0.55s ease-out both;
+    hero-fade-up 0.65s 0.95s ease-out both;
 }
+
+/* Animate opacity only: don't conflict with 3D */
 
 .hero-ready .hero-profile {
   animation:
-    hero-card-appear
-    0.8s 0.2s ease-out both;
+    hero-card-appear 0.8s 0.3s ease-out both;
 }
 
 .hero-ready .hero-social {
   animation:
-    hero-reveal-up
-    0.7s 0.72s ease-out both;
+    hero-fade-up 0.65s 1.08s ease-out both;
 }
 
 /* =========================================================
    KEYFRAMES
 ========================================================= */
 
-@keyframes hero-reveal-up {
+@keyframes hero-fade-up {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(17px);
   }
 
   to {
@@ -1121,28 +1189,39 @@
   }
 }
 
-@keyframes hero-name-reveal {
-  from {
+@keyframes hero-letter-enter {
+  0% {
     opacity: 0;
 
-    transform: translateY(15px);
+    transform:
+      translateY(30px)
+      rotate(-6deg)
+      scale(0.85);
 
-    clip-path: inset(0 100% 0 0);
+    filter: blur(4px);
   }
 
-  to {
+  75% {
     opacity: 1;
 
-    transform: translateY(0);
+    transform:
+      translateY(-3px)
+      rotate(1deg)
+      scale(1.03);
 
-    clip-path: inset(0 0 0 0);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0) scale(1);
   }
 }
 
-@keyframes hero-period-pop {
+@keyframes hero-period-enter {
   from {
     opacity: 0;
-    transform: translateY(-12px) scale(0.5);
+    transform: translateY(-20px) scale(0.5);
   }
 
   to {
@@ -1162,32 +1241,25 @@
 }
 
 @keyframes hero-cursor-blink {
-  0%,
-  49% {
+  0%, 49% {
     opacity: 1;
   }
 
-  50%,
-  100% {
+  50%, 100% {
     opacity: 0;
   }
 }
 
-@keyframes hero-cursor-finish {
-  from {
-    opacity: 1;
-  }
-
+@keyframes hero-cursor-hide {
   to {
     opacity: 0;
   }
 }
 
-@keyframes hero-status-pulse {
-  0%,
-  100% {
+@keyframes hero-dot-pulse {
+  0%, 100% {
     box-shadow:
-      0 0 0 3px
+      0 0 0 4px
       color-mix(
         in srgb,
         var(--accent) 12%,
@@ -1197,7 +1269,7 @@
 
   50% {
     box-shadow:
-      0 0 0 6px
+      0 0 0 7px
       color-mix(
         in srgb,
         var(--accent) 4%,
@@ -1206,15 +1278,107 @@
   }
 }
 
-@keyframes hero-flip-cue {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
+/* =========================================================
+   LIGHT THEME — HIGHER CONTRAST
+========================================================= */
 
-  50% {
-    transform: rotate(45deg);
-  }
+:root[data-theme="light"] .hero-intro-group {
+  border: 2px solid var(--line-strong);
+
+  background: var(--panel);
+  box-shadow:
+    0 5px 18px rgba(36, 64, 32, 0.07);
+}
+
+:root[data-theme="light"] .hero-intro-line {
+  height: 3px;
+}
+
+:root[data-theme="light"] .hero-intro {
+  font-weight: 600;
+}
+
+:root[data-theme="light"] .hero-email-button,
+:root[data-theme="light"] .hero-copy-email {
+  border: 2px solid var(--line-strong);
+}
+
+:root[data-theme="light"] .hero-profile {
+  border: 2px solid var(--line-strong);
+
+  box-shadow:
+    0 16px 40px rgba(30, 52, 32, 0.12);
+}
+
+:root[data-theme="light"] .hero-profile:hover {
+  border-color: var(--accent);
+}
+
+:root[data-theme="light"] .hero-profile-top,
+:root[data-theme="light"] .hero-card-footer {
+  border-color: var(--line-strong);
+  border-width: 2px;
+}
+
+:root[data-theme="light"] .hero-photo-area {
+  background:
+    radial-gradient(
+      ellipse at 50% 70%,
+      #e0ebd7,
+      #f0f4eb 72%
+    );
+
+  border-bottom:
+    2px solid var(--line-strong);
+}
+
+:root[data-theme="light"] .hero-photo-grid {
+  opacity: 0.95;
+}
+
+:root[data-theme="light"] .hero-photo-orbit {
+  border-color:
+    rgba(54, 95, 18, 0.38);
+}
+
+:root[data-theme="light"]
+.hero-photo-orbit-inner {
+  border-color:
+    rgba(54, 95, 18, 0.24);
+}
+
+:root[data-theme="light"]
+.hero-photo-bottom-line {
+  opacity: 1;
+  height: 4px;
+}
+
+:root[data-theme="light"] .hero-back-service {
+  border: 1px solid var(--line-strong);
+
+  background: #f8faf6;
+}
+
+:root[data-theme="light"]
+.hero-back-service-icon {
+  border: 2px solid var(--line);
+
+  background: var(--panel-2);
+}
+
+:root[data-theme="light"] .hero-social-line {
+  height: 2px;
+  background: var(--line-strong);
+}
+
+:root[data-theme="light"]
+.hero-social .social-row .social-link {
+  border: 2px solid var(--line);
+}
+
+:root[data-theme="light"]
+.hero-social .social-row .social-link:hover {
+  border-color: var(--accent);
 }
 
 /* =========================================================
@@ -1242,15 +1406,19 @@
   }
 
   .hero .hero-name {
-    font-size: clamp(67px, 9vw, 105px);
-  }
-
-  .hero-headline {
-    max-width: 700px;
+    font-size: clamp(68px, 10vw, 110px);
   }
 
   .hero-photo-area {
-    min-height: 240px;
+    height: 340px;
+  }
+
+  .hero-photo {
+    width: min(85%, 380px);
+  }
+
+  .hero-profile {
+    perspective: 1450px;
   }
 }
 
@@ -1260,27 +1428,38 @@
 
 @media (max-width: 680px) {
   .hero {
-    gap: 26px;
-    padding: 30px 0 48px;
+    gap: 25px;
+    padding: 30px 0 50px;
+  }
+
+  .hero-intro-group {
+    gap: 9px;
+
+    margin-bottom: 19px;
+    padding: 9px 13px;
   }
 
   .hero-intro {
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .hero-intro-line {
+    width: 16px;
   }
 
   .hero .hero-name {
-    font-size: clamp(57px, 13.5vw, 86px);
+    font-size: clamp(60px, 14vw, 87px);
   }
 
   .hero-headline {
-    margin-top: 20px;
+    margin-top: 21px;
 
-    font-size: clamp(26px, 6.6vw, 35px);
-    line-height: 1.25;
+    font-size: clamp(25px, 6.7vw, 35px);
   }
 
   .hero-typed-line {
     min-height: 2.5em;
+    margin-top: 5px;
   }
 
   .hero-lead {
@@ -1290,7 +1469,7 @@
     line-height: 1.75;
   }
 
-  /* ACTIONS */
+  /* Actions */
 
   .hero-actions {
     display: grid;
@@ -1301,8 +1480,8 @@
   }
 
   .hero-actions .button {
-    width: 100%;
     min-height: 54px;
+    width: 100%;
     padding: 11px 16px;
   }
 
@@ -1328,31 +1507,32 @@
     min-height: 54px;
   }
 
-  /* CARD */
+  /* Profile */
 
   .hero-profile {
+    perspective: 1050px;
     border-radius: 16px;
   }
 
   .hero-profile-face {
+    min-height: 610px;
     border-radius: 15px;
   }
 
   .hero-profile-top {
-    padding: 14px 16px;
+    padding: 13px 16px;
   }
 
   .hero-photo-area {
-    min-height: 205px;
-    padding: 24px 16px;
+    height: 290px;
   }
 
-  .hero-photo-frame {
-    width: 145px;
+  .hero-photo {
+    width: min(90%, 330px);
   }
 
   .hero-profile-info {
-    padding: 22px 20px;
+    padding: 21px 19px;
   }
 
   .hero-profile-info h3 {
@@ -1371,7 +1551,7 @@
     padding: 13px 16px;
   }
 
-  /* SOCIALS */
+  /* Socials */
 
   .hero-social .social-row {
     gap: 9px;
@@ -1384,17 +1564,16 @@
 }
 
 /* =========================================================
-   SMALL PHONES
+   SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 430px) {
   .hero {
     padding-top: 25px;
-    gap: 23px;
   }
 
   .hero .hero-name {
-    font-size: clamp(53px, 14vw, 65px);
+    font-size: clamp(55px, 14vw, 65px);
   }
 
   .hero-headline {
@@ -1413,12 +1592,16 @@
     font-size: 11px;
   }
 
-  .hero-photo-frame {
-    width: 132px;
+  .hero-photo-area {
+    height: 265px;
+  }
+
+  .hero-photo {
+    width: min(93%, 300px);
   }
 
   .hero-profile-info {
-    padding: 20px 17px;
+    padding: 19px 17px;
   }
 
   .hero-profile-info h3 {
@@ -1444,23 +1627,32 @@
   .hero-social .social-row .social-link {
     padding: 11px;
   }
-
-  .hero-social .social-link-info strong {
-    font-size: 13px;
-  }
-
-  .hero-social .social-link-info small {
-    font-size: 11px;
-  }
 }
 
 /* =========================================================
-   EXTRA SMALL PHONES
+   EXTRA SMALL
 ========================================================= */
 
 @media (max-width: 350px) {
   .hero .hero-name {
-    font-size: 49px;
+    font-size: 50px;
+  }
+
+  .hero-intro-group {
+    gap: 7px;
+    padding: 8px 10px;
+  }
+
+  .hero-intro {
+    font-size: 11px;
+  }
+
+  .hero-photo-area {
+    height: 245px;
+  }
+
+  .hero-card-hint {
+    font-size: 9px;
   }
 
   .hero-social .social-row {
@@ -1469,47 +1661,48 @@
 }
 
 /* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+.hero a:focus-visible,
+.hero button:focus-visible,
+.hero-profile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* =========================================================
    REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-profile-inner {
-    transition: none;
-  }
-
   .hero-ready .hero-intro-group,
-  .hero-ready .hero-name,
+  .hero-ready .hero-name-letter,
   .hero-ready .hero-name-period,
   .hero-ready .hero-headline,
   .hero-ready .hero-lead,
   .hero-ready .hero-actions,
   .hero-ready .hero-profile,
   .hero-ready .hero-social,
+  .hero-intro-dot,
   .hero-profile-status .status-dot,
-  .hero-profile:hover
-  .hero-card-flip-symbol {
-    animation: none;
+  .hero-typing-cursor {
+    animation: none !important;
   }
 
-  .hero-typing-cursor {
-    display: none;
+  .hero-profile-inner {
+    transition: none !important;
   }
 
   .hero-actions .button,
   .hero-copy-email,
-  .hero-photo-frame,
-  .hero-about-link,
   .hero-back-service,
+  .hero-about-link,
   .hero-social .social-link {
     transition: none;
   }
 
-  .hero-actions .button:hover,
-  .hero-copy-email:hover,
-  .hero-profile:not(.is-flipped):hover
-  .hero-photo-frame,
-  .hero-back-service:hover,
-  .hero-social .social-link:hover {
-    transform: none;
+  .hero-typing-cursor {
+    display: none;
   }
 }

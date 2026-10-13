@@ -15,47 +15,83 @@
   --bg: #0a0c0e;
   --panel: #101317;
   --panel-2: #14181d;
+
   --text: #f2f5f7;
   --muted: #969fa8;
+
   --line: #262c32;
   --line-soft: #1a1f24;
+  --line-strong: #3a444b;
+
   --accent: #b7ff58;
   --accent-2: #78d6ff;
 
-  --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  --grid-line: rgba(183, 255, 88, 0.11);
+
+  --shadow:
+    0 24px 80px rgba(0, 0, 0, 0.28);
+
+  --shadow-soft:
+    0 8px 24px rgba(0, 0, 0, 0.12);
+
   --max: 1180px;
 }
 
 /* =========================================================
-   LIGHT THEME
+   LIGHT THEME — HIGHER CONTRAST
 ========================================================= */
 
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: #f5f5f1;
+  /* Backgrounds */
+
+  --bg: #f2f4ee;
   --panel: #ffffff;
-  --panel-2: #eef0ec;
-  --text: #111315;
-  --muted: #636a71;
-  --line: #d9ddd8;
-  --line-soft: #e8eae6;
-  --accent: #4f7619;
+  --panel-2: #e6ece2;
+
+  /* Typography */
+
+  --text: #17201a;
+  --muted: #536158;
+
+  /* Stronger borders */
+
+  --line: #0e230c;
+  --line-soft: #c2cec0;
+  --line-strong: #788e78;
+
+  /* Accents */
+
+  --accent: #365f12;
   --accent-2: #176886;
 
-  --shadow: 0 24px 70px rgba(30, 36, 31, 0.08);
+  /* More visible grid pattern */
+
+  --grid-line: rgba(1, 3, 0, 0.27);
+
+  /* Shadows */
+
+  --shadow:
+    0 20px 55px rgba(35, 56, 35, 0.12);
+
+  --shadow-soft:
+    0 6px 20px rgba(35, 56, 35, 0.08);
 }
 
 /* =========================================================
-   GLOBAL
+   GLOBAL RESET
 ========================================================= */
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   font-size: 16px;
+
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
 }
@@ -71,6 +107,10 @@ body {
   line-height: 1.65;
 
   -webkit-font-smoothing: antialiased;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 a {
@@ -91,9 +131,13 @@ p {
   line-height: 1.7;
 }
 
+/* =========================================================
+   TEXT SELECTION
+========================================================= */
+
 ::selection {
   background: var(--accent);
-  color: #0b0d0d;
+  color: var(--bg);
 }
 
 /* =========================================================
@@ -112,7 +156,11 @@ p {
 .section-grid,
 .content-section,
 .contact-section {
-  width: min(calc(100% - 40px), var(--max));
+  width: min(
+    calc(100% - 40px),
+    var(--max)
+  );
+
   margin-inline: auto;
 }
 
@@ -121,13 +169,12 @@ p {
 ========================================================= */
 
 .button {
-  min-height: 46px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 
+  min-height: 46px;
   padding: 10px 17px;
 
   border: 1px solid var(--line);
@@ -137,39 +184,331 @@ p {
   font-weight: 600;
 
   transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .button.primary {
+  border-color: var(--text);
+
   background: var(--text);
   color: var(--bg);
-  border-color: var(--text);
 }
 
 .button.secondary {
+  border-color: var(--line);
+
   background: var(--panel);
+  color: var(--text);
 }
 
 .button:hover {
   transform: translateY(-2px);
 }
 
+.button.secondary:hover {
+  border-color: var(--accent);
+  background: var(--panel-2);
+}
+
 /* =========================================================
-   ACCESSIBILITY
+   LIGHT THEME — BUTTONS
+========================================================= */
+
+:root[data-theme="light"]
+.button.primary {
+  background: #253d19;
+  border-color: #253d19;
+  color: #ffffff;
+}
+
+:root[data-theme="light"]
+.button.primary:hover {
+  background: #365f12;
+  border-color: #365f12;
+
+  box-shadow:
+    0 8px 20px rgba(54, 95, 18, 0.18);
+}
+
+:root[data-theme="light"]
+.button.secondary {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--text);
+}
+
+:root[data-theme="light"]
+.button.secondary:hover {
+  background: var(--panel-2);
+  border-color: var(--accent);
+}
+
+/* =========================================================
+   LIGHT THEME — PROFILE CARD
+========================================================= */
+
+:root[data-theme="light"]
+.hero-profile {
+  border-color: var(--line-strong);
+
+  background: var(--panel);
+
+  box-shadow:
+    0 16px 40px rgba(30, 52, 32, 0.1);
+}
+
+:root[data-theme="light"]
+.hero-profile:hover {
+  border-color: var(--accent);
+
+  box-shadow:
+    0 20px 48px rgba(30, 52, 32, 0.15);
+}
+
+/* Stronger dividers */
+
+:root[data-theme="light"]
+.hero-profile-top,
+:root[data-theme="light"]
+.hero-profile-info,
+:root[data-theme="light"]
+.hero-card-footer {
+  border-color: var(--line);
+}
+
+/* =========================================================
+   LIGHT THEME — PROFILE PHOTO GRID
+========================================================= */
+
+:root[data-theme="light"]
+.hero-photo-area {
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      #f6f8f3 0%,
+      #e5ebe1 100%
+    );
+}
+
+:root[data-theme="light"]
+.hero-photo-area::before {
+  background-image:
+    linear-gradient(
+      var(--grid-line) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      var(--grid-line) 1px,
+      transparent 1px
+    );
+
+  background-size: 25px 25px;
+
+  opacity: 0.9;
+}
+
+:root[data-theme="light"]
+.hero-photo-frame {
+  border-color: var(--line-strong);
+
+  box-shadow:
+    0 10px 25px rgba(30, 52, 32, 0.16);
+}
+
+/* =========================================================
+   LIGHT THEME — PROFILE BACK
+========================================================= */
+
+:root[data-theme="light"]
+.hero-back-service {
+  background: #f8faf6;
+  border-color: var(--line);
+}
+
+:root[data-theme="light"]
+.hero-back-service:hover {
+  background: var(--panel-2);
+  border-color: var(--accent);
+}
+
+:root[data-theme="light"]
+.hero-back-service-icon {
+  background: #e9efe5;
+  border-color: var(--line-strong);
+}
+
+:root[data-theme="light"]
+.hero-back-service-number {
+  color: var(--muted);
+}
+
+/* =========================================================
+   LIGHT THEME — CYLINDER CARD EFFECT
+========================================================= */
+
+:root[data-theme="light"]
+.hero-profile-cylinder::before {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(35, 70, 31, 0.08),
+      transparent 22%,
+      transparent 78%,
+      rgba(35, 70, 31, 0.08)
+    );
+}
+
+:root[data-theme="light"]
+.hero-profile-cylinder
+.hero-profile-face::after {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(25, 55, 25, 0.055),
+      transparent 17%,
+      transparent 83%,
+      rgba(25, 55, 25, 0.055)
+    );
+}
+
+/* =========================================================
+   LIGHT THEME — SOCIAL CARDS
+========================================================= */
+
+:root[data-theme="light"]
+.hero-social .social-row .social-link {
+  background: var(--panel);
+  border-color: var(--line);
+
+  box-shadow:
+    0 3px 12px rgba(30, 52, 32, 0.035);
+}
+
+:root[data-theme="light"]
+.hero-social .social-row .social-link:hover {
+  background: var(--panel-2);
+  border-color: var(--accent);
+
+  box-shadow:
+    0 8px 22px rgba(30, 52, 32, 0.09);
+}
+
+:root[data-theme="light"]
+.hero-social-line {
+  background: var(--line-strong);
+}
+
+/* =========================================================
+   LIGHT THEME — NAVIGATION
+========================================================= */
+
+:root[data-theme="light"]
+.navbar-shell {
+  border-color: var(--line);
+}
+
+:root[data-theme="light"]
+.visitor-presence--navbar {
+  background: var(--panel);
+  border-color: var(--line-strong);
+}
+
+:root[data-theme="light"]
+.visitor-presence--drawer {
+  background: var(--panel);
+  border-color: var(--line-strong);
+}
+
+/* =========================================================
+   LIGHT THEME — GENERAL PANELS
+
+   Improves separation without applying borders
+   indiscriminately to every element.
+========================================================= */
+
+:root[data-theme="light"]
+.hero-email-button,
+:root[data-theme="light"]
+.hero-copy-email {
+  border-color: var(--line-strong);
+}
+
+:root[data-theme="light"]
+.hero-email-button:hover,
+:root[data-theme="light"]
+.hero-copy-email:hover {
+  border-color: var(--accent);
+}
+
+/* =========================================================
+   LIGHT THEME — SPLASH EFFECTS
+========================================================= */
+
+:root[data-theme="light"]
+.splash-grid {
+  background-image:
+    linear-gradient(
+      rgba(54, 95, 18, 0.21) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(54, 95, 18, 0.21) 1px,
+      transparent 1px
+    );
+
+  opacity: 0.6;
+}
+
+:root[data-theme="light"]
+.splash-power-ring {
+  filter:
+    drop-shadow(
+      0 0 4px rgba(54, 95, 18, 0.22)
+    );
+}
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
 ========================================================= */
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+[tabindex="0"]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 680px) {
+  .section-grid,
+  .content-section,
+  .contact-section {
+    width: min(
+      calc(100% - 28px),
+      var(--max)
+    );
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
+  body,
   .button {
     transition: none;
   }
