@@ -96,5 +96,43 @@
       "design": null,
       "caseStudy": null
     }
+  },
+  {
+    "id": "Trainex",
+    "name": "Trainex(Ongoing Capstone)",
+    "category": "Web · Interactive Simulation",
+    "featured": false,
+    "description": "An interactive web-based train driver's console simulator developed as an ongoing capstone project for railway engineering education. Features virtual train controls, acceleration and braking simulation, emergency brake functionality, passenger door operations, and Arduino-based microcontroller emulation.",
+    "tags": [
+      "JavaScript",
+      "Vite",
+      "Tailwind CSS",
+      "Arduino C++",
+      "AVR8js",
+      "Web Simulation"
+    ],
+    "highlights": [
+      "Interactive train driver's control console",
+      "Simulated train acceleration and braking",
+      "Emergency braking and passenger door controls",
+      "Browser-based Arduino microcontroller simulation",
+      "Responsive interface for desktop and mobile"
+    ],
+    "preview": {
+      "layout": "website",
+      "embed": true,
+      "image": null,
+      "video": null,
+      "poster": null,
+      "alt": "Trainex interactive train driver console simulator",
+      "link": "https://trainex-six.vercel.app/"
+    },
+    "links": {
+      "live": "https://trainex-six.vercel.app/",
+      "github": "https://github.com/HiroSaito04/trainex",
+      "demo": null,
+      "design": null,
+      "caseStudy": null
+    }
   }
 ]
