@@ -49,7 +49,8 @@ export function AboutSection() {
             products, making existing applications
             more reliable, and finding ways to
             simplify everyday work through
-            technology.
+            technology. I also like working on developing
+            games.
           </p>
 
           <p>
@@ -62,9 +63,12 @@ export function AboutSection() {
             className="about-capabilities"
             aria-label="Areas I focus on"
           >
-            <span>Web applications</span>
-            <span>Mobile development</span>
+            <span>Web Applications</span>
+            <span>Mobile Applications</span>
+            <span>Game Development</span>
             <span>Backend systems</span>
+            <span>Frontend systems</span>
+            <span>Database systems</span>
             <span>Automation</span>
           </div>
         </div>

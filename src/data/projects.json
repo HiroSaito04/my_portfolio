@@ -5,7 +5,7 @@
     "name": "RotomPC",
     "category": "Web · Mobile · Game · Social Platform",
     "featured": true,
-    "description": "A Pokémon-inspired PC terminal experience with a Pokédex, social features, trainer profiles, an AI chatbot, buddy-pet simulation, and administrative moderation tools. Built to work across desktop and mobile viewports.",
+    "description": "A Pokémon-inspired PC terminal experience featuring a Pokédex, social interactions, trainer profiles, an AI chatbot, a virtual buddy simulation, and administrative moderation tools. Designed with a responsive interface for desktop and mobile devices.",
     "tags": [
       "React",
       "Vite",
@@ -15,6 +15,8 @@
     ],
     "highlights": [
       "Responsive desktop and mobile interface",
+      "Pokédex and interactive trainer profiles",
+      "AI-powered chatbot and virtual pokemon buddy simulation",
       "Database synchronization",
       "Admin analytics and moderation tools"
     ],
@@ -25,7 +27,7 @@
       "video": null,
       "poster": "/projects/rotompc.png",
       "alt": "RotomPC website screenshot",
-      "link": null
+      "link": "https://rotompcxyz.vercel.app"
     },
     "links": {
       "live": "https://rotompcxyz.vercel.app",
@@ -36,70 +38,84 @@
     }
   },
   {
-    "id": "pathforward",
-    "name": "PathForward Web",
-    "category": "Web · Administrative Platform",
-    "featured": false,
-    "description": "An web platform designed for pathforward mobile application porting and administrative features of the pathforward system including user management, job role management, system reports, and etc...",
-    "tags": [
-      "React",
-      "Node.js",
-      "REST APIs",
-      "MongoDB",
-      "JavaScript"
-    ],
-    "highlights": [],
-    "preview": {
-      "layout": "website",
-      "embed": false,
-      "image": "/projects/pathforward-web.png",
-      "video": "/projects/pathforward_vid.mp4",
-      "poster": "/projects/pathforward-web.png",
-      "alt": "PathForward website screenshot",
-      "link": "https://pathforward-web.onrender.com/"
-    },
-    "links": {
-      "live": "https://pathforward-web.onrender.com/",
-      "github": null,
-      "demo": null,
-      "design": null,
-      "caseStudy": null
-    }
+  "id": "pathforward",
+  "name": "PathForward Web",
+  "category": "Web · Administrative Platform",
+  "featured": false,
+  "description": "A web-based administrative platform supporting the PathForward mobile application, with comprehensive workflows for user management, job role management, system administration, reporting, and other core platform operations.",
+  "tags": [
+    "React",
+    "Node.js",
+    "REST APIs",
+    "MongoDB",
+    "JavaScript"
+  ],
+  "highlights": [
+    "Admin analytics and moderation tools",
+    "AI-powered learning resources generation",
+    "User managment modules",
+    "Real-time database synchronization"
+  ],
+  "preview": {
+    "layout": "website",
+    "embed": false,
+    "image": "/projects/pathforward-web.png",
+    "video": "/projects/pathforward_vid.mp4",
+    "poster": "/projects/pathforward-web.png",
+    "alt": "PathForward Web administrative platform screenshot",
+    "link": "https://pathforward-web.onrender.com/"
   },
-  {
-    "id": "pathforward-mobile",
-    "name": "PathForward Mobile App",
-    "category": "Mobile · Career and Learning Platform",
-    "featured": true,
-    "description": "A career-development platform supporting job seekers through structured assessments, guided learning, and responsive web and mobile experiences, with administrative and adviser-facing workflows.",
-    "tags": [
-      "Dart",
-      "Flutter",
-      "Firebase",
-      "Node.js"
-    ],
-    "highlights": [
-    ],
-    "preview": {
-      "layout": "design",
-      "embed": true,
-      "image":  "/projects/pathforward-mobile02.png",
-      "video": null,
-      "poster":  "/projects/pathforward-mobile02.png",
-      "alt": "Pathforward moble screenshot",
-      "link": null
-    },
-    "links": {
-      "live": null,
-      "github": null,
-      "demo": null,
-      "design": null,
-      "caseStudy": null
-    }
+  "links": {
+    "live": "https://pathforward-web.onrender.com/",
+    "github": null,
+    "demo": null,
+    "design": null,
+    "caseStudy": null
+  }
+},
+{
+  "id": "pathforward-mobile",
+  "name": "PathForward Mobile App",
+  "category": "Mobile · Career and Learning Platform",
+  "featured": true,
+  "description": "An AI-powered career-development mobile platform that helps job seekers identify suitable IT career paths, complete structured assessments, follow personalized skill roadmaps, access verified learning resources, and track their progress toward career readiness.",
+  "tags": [
+    "Dart",
+    "Flutter",
+    "Firebase",
+    "Node.js",
+    "MongoDB",
+    "REST APIs",
+    "AI"
+  ],
+  "highlights": [
+    "Personalized career recommendations",
+    "Structured career and final assessments",
+    "AI-generated learning roadmaps",
+    "Remedial learning and relearning pathways",
+    "Learning resource tracking",
+    "Progress monitoring"
+  ],
+  "preview": {
+    "layout": "design",
+    "embed": true,
+    "image": "/projects/pathforward-mobile02.png",
+    "video": null,
+    "poster": "/projects/pathforward-mobile02.png",
+    "alt": "PathForward mobile application screenshot",
+    "link": null
   },
+  "links": {
+    "live": null,
+    "github": null,
+    "demo": null,
+    "design": null,
+    "caseStudy": null
+  }
+},
   {
     "id": "Trainex",
-    "name": "Trainex(Ongoing Capstone)",
+    "name": "Trainex",
     "category": "Web · Interactive Simulation",
     "featured": false,
     "description": "An interactive web-based train driver's console simulator developed as an ongoing capstone project for railway engineering education. Features virtual train controls, acceleration and braking simulation, emergency brake functionality, passenger door operations, and Arduino-based microcontroller emulation.",
@@ -108,7 +124,6 @@
       "Vite",
       "Tailwind CSS",
       "Arduino C++",
-      "AVR8js",
       "Web Simulation"
     ],
     "highlights": [
@@ -130,6 +145,45 @@
     "links": {
       "live": "https://trainex-six.vercel.app/",
       "github": "https://github.com/HiroSaito04/trainex",
+      "demo": null,
+      "design": null,
+      "caseStudy": null
+    }
+  },
+  {
+    "id": "angono-giants",
+    "name": "Angono Giants",
+    "category": "Mobile · Web · 2D Arcade Game",
+    "featured": true,
+    "description": "A Filipino folklore-inspired 2D arcade defense game featuring Higantes giants and village protection gameplay. Players defend their village against waves of enemies, earn points, survive increasingly challenging levels, and unlock new stages. Developed as a native Android game with animated pixel-art visuals, interactive touch controls, Firebase-powered player progress and leaderboards, and an HTML5 browser adaptation.",
+    "tags": [
+      "Java",
+      "Android",
+      "Firebase",
+      "JavaScript",
+      "HTML5",
+      "Canvas"
+    ],
+    "highlights": [
+      "Filipino tradition-inspired from the Angono's Festival with gameplay featuring Higantes",
+      "Wave-based enemy spawning, combat, and progressive difficulty",
+      "Interactive touch controls, scoring, and survival mechanics",
+      "Animated pixel-art environments and cinematic game transitions",
+      "Firebase authentication, player progression, and leaderboards",
+      "Android application with an HTML5 browser adaptation"
+    ],
+    "preview": {
+      "layout": "website",
+      "embed": false,
+      "image": "/projects/angono-giants.png",
+      "video": null,
+      "poster": "/projects/angono-giants.png",
+      "alt": "Angono Giants pixel-art arcade defense game screenshot",
+      "link": "https://hiro-saito.itch.io/angono-giants"
+    },
+    "links": {
+      "live": null,
+      "github": null,
       "demo": null,
       "design": null,
       "caseStudy": null

@@ -15,6 +15,7 @@ import {
   Mail,
   Rotate3D,
   Smartphone,
+  Sparkle,
   Zap,
 } from "lucide-react";
 
@@ -43,7 +44,7 @@ const focusAreas = [
     Icon: Code2,
   },
   {
-    title: "Mobile applications",
+    title: "Mobile Applications",
     description:
       "Practical mobile experiences and everyday tools.",
     Icon: Smartphone,
@@ -53,6 +54,12 @@ const focusAreas = [
     description:
       "Better workflows with less repetitive work.",
     Icon: Zap,
+  },
+  {
+    title: "Game Development",
+    description:
+      "Engaging games for entertainment.",
+    Icon: Sparkle,
   },
 ];
 

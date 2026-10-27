@@ -21,7 +21,7 @@ const DESKTOP_HEIGHT = 900;
 const linkTypes = [
   {
     key: "live",
-    label: "Visit website",
+    label: "Visit Link",
     Icon: ExternalLink,
   },
   {
